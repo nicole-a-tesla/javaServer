@@ -1,10 +1,12 @@
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
 
 *.iml
+runserver
 
 ## Directory-based project format:
 .idea/
 cob_spec/
+build/
 # if you remove the above rule, at least ignore the following:
 
 # User-specific stuff:
