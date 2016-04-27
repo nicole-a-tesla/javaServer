@@ -21,7 +21,7 @@ public class ResponseTest {
 
     @Test
     public void testHasContentTypeHeader() {
-        assertEquals("text/html", response.getHeader("Content-Type"));
+        assertEquals("text/html", response.getHeader("Content-Type:"));
     }
 
     @Test
@@ -31,6 +31,13 @@ public class ResponseTest {
 
     @Test
     public void testHasContentLengthEqualToBodyLength(){
-        assertEquals(Integer.toString(response.body.length()), response.getHeader("Content-Length"));
+        assertEquals(Integer.toString(response.body.length()), response.getHeader("Content-Length:"));
+    }
+
+    @Test
+    public void testResponseToString() {
+        String expectedString = "HTTP/1.0 200 OK\r\nContent-Length: 4\nContent-Type: text/html\r\nbody";
+        String actualString = response.toString();
+        assertEquals(expectedString, actualString);
     }
 }

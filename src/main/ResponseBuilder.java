@@ -20,8 +20,8 @@ public class ResponseBuilder {
 
     private void setHeaders() {
         HashMap<String, String> headersMap = new HashMap<>();
-        headersMap.put("Content-Type", "text/html");
-        headersMap.put("Content-Length", Integer.toString(args[1].length()));
+        headersMap.put("Content-Type:", "text/html");
+        headersMap.put("Content-Length:", Integer.toString(args[1].length()));
 
         response.headers = headersMap;
     }
