@@ -32,11 +32,11 @@ public class RequestTest {
 
     @Test
     public void testGetRequestHeader() {
-        assertEquals("I'm-A-Value", request.getHeader("I'm-A-Key"));
+        assertEquals("I'm-A-Value", request.getHeader("I'm-A-Key:"));
     }
 
     @Test
     public void testGetsMultipleRequestHeaders() {
-        assertEquals("Another-Value", request.getHeader("Another-Key"));
+        assertEquals("Another-Value", request.getHeader("Another-Key:"));
     }
 }

@@ -44,12 +44,7 @@ public class RequestBuilder {
 
     private void setHeader(String element, HashMap headerMap) {
         String[] parts = element.split("\\s+");
-        headerMap.put(strip(parts[0]), parts[1]);
+        headerMap.put(parts[0], parts[1]);
     }
-
-    private String strip(String input) {
-        return input.replace(":", "");
-    }
-
 
 }
