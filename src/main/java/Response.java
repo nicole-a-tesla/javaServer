@@ -1,5 +1,3 @@
-package main;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +11,7 @@ public class Response {
     }
 
     public String toString() {
-        return "HTTP/1.0 " + statusCode + headersToString() + "body";
+        return "HTTP/1.0 " + statusCode + headersToString() + body;
     }
 
     private String headersToString() {

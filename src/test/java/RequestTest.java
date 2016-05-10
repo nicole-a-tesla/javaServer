@@ -1,9 +1,8 @@
-package test;
 import org.junit.Test;
 import org.junit.Before;
 
-import main.Request;
-import main.RequestBuilder;
+import Request;
+import RequestBuilder;
 import static org.junit.Assert.assertEquals;
 
 public class RequestTest {

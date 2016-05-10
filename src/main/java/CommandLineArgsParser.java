@@ -1,11 +1,9 @@
-package main;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class CommandLineArgsParser {
-    public HashMap argsMap;
+    private HashMap argsMap;
     private String[] args;
     private List<Integer> validLengths = Arrays.asList(0, 2, 4);
     private String errorMessage = "Correct format: -p PORT_NUMBER -d DIRECTORY";
@@ -20,7 +18,9 @@ public class CommandLineArgsParser {
         if (validLengths.contains(args.length)) {
             if (args.length >= 2) setArgs(args[0], args[1]);
             if (args.length == 4) setArgs(args[2], args[3]);
-        } else throw new IllegalArgumentException(errorMessage);
+        } else {
+            throw new IllegalArgumentException(errorMessage);
+        }
         return argsMap;
     }
 

@@ -1,6 +1,5 @@
-package test;
-import main.Response;
-import main.ResponseBuilder;
+import Response;
+import ResponseBuilder;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.assertEquals;
@@ -36,7 +35,7 @@ public class ResponseTest {
 
     @Test
     public void testResponseToString() {
-        String expectedString = "HTTP/1.0 200 OK\r\nContent-Length: 4\nContent-Type: text/html\r\nbody";
+        String expectedString = "HTTP/1.0 200 OK\r\nContent-Length: 4\r\nContent-Type: text/html\r\nbody";
         String actualString = response.toString();
         assertEquals(expectedString, actualString);
     }

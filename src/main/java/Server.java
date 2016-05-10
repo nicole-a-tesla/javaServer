@@ -1,0 +1,30 @@
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.HashMap;
+
+public class Server {
+    ServerSocket serverSocket;
+
+    public void start(HashMap args) throws IOException {
+        serverSocket = new ServerSocket((Integer) args.getOrDefault("-p", 5000));
+
+        while (true) {
+            Socket clientSocket = serverSocket.accept();
+            Worker worker = new Worker();
+
+            if (clientSocket != null) {
+             try (
+                     PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
+                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+                     ) {
+                 Request request = new RequestBuilder(in.toString()).build();
+                 Response response = worker.getResponse(request);
+                 out.println(response.toString());
+
+                }
+            }
+        }
+    }
+}
