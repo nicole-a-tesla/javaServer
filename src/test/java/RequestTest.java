@@ -10,7 +10,7 @@ public class RequestTest {
 
     @Before
     public void setUp() throws IOException {
-        String str = "GET /nice/file.html HTTP/1.0\r\nI'm-A-Key: I'm-A-Value\r\nAnother-Key: Another-Value\r\n\r\n";
+        String str = "GET / HTTP/1.0\r\nI'm-A-Key: I'm-A-Value\r\nAnother-Key: Another-Value\r\n\r\n";
         InputStream stream = new ByteArrayInputStream(str.getBytes());
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         RequestBuilder builder = new RequestBuilder();
@@ -25,7 +25,7 @@ public class RequestTest {
 
     @Test
     public void testGetRequestResource() {
-        assertEquals("/nice/file.html", request.resource);
+        assertEquals("/", request.resource);
     }
 
     @Test
