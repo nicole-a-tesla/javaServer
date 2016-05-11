@@ -1,16 +1,20 @@
 import org.junit.Test;
 import org.junit.Before;
 
-import Request;
-import RequestBuilder;
 import static org.junit.Assert.assertEquals;
+
+import java.io.*;
 
 public class RequestTest {
     private Request request;
+
     @Before
-    public void setUp() {
-        RequestBuilder builder = new RequestBuilder("GET /nice/file.html HTTP/1.0\r\nI'm-A-Key: I'm-A-Value\r\nAnother-Key: Another-Value");
-        request = builder.build();
+    public void setUp() throws IOException {
+        String str = "GET /nice/file.html HTTP/1.0\r\nI'm-A-Key: I'm-A-Value\r\nAnother-Key: Another-Value\r\n\r\n";
+        InputStream stream = new ByteArrayInputStream(str.getBytes());
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        RequestBuilder builder = new RequestBuilder();
+        request = builder.build(reader);
 
     }
 

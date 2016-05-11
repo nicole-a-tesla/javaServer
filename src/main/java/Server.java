@@ -7,24 +7,20 @@ public class Server {
     ServerSocket serverSocket;
 
     public void start(HashMap args) throws IOException {
+
         serverSocket = new ServerSocket((Integer) args.getOrDefault("-p", 5000));
 
         while (true) {
             Socket clientSocket = serverSocket.accept();
-            Worker worker = new Worker();
 
-            if (clientSocket != null) {
-             try (
-                     PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
-                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-                     ) {
-                 Request request = new RequestBuilder(in.toString()).build();
-                 Response response = worker.getResponse(request);
-                 out.println(response.toString());
+            Request request = new RequestBuilder().build(in);
+            Response response = new Worker().getResponse(request);
 
-                }
-            }
+            out.print(response.toString());
+            out.close();
         }
     }
 }

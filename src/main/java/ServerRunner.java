@@ -1,22 +1,14 @@
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.util.HashMap;
 
 public class ServerRunner {
 
     public static void main(String[] args) throws IOException {
-        
-        ServerSocket serverSocket = new ServerSocket(5000);
+        Server server = new Server();
+        CommandLineArgsParser parser = new CommandLineArgsParser(args);
+        HashMap parsedArgs = parser.parse();
 
-        while (true) {
-            Socket clientSocket = serverSocket.accept();
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
-            String response = "HTTP/1.1 200 OK\r\n";
-            out.print(response);
-            out.close();
-        }
-
+        server.start(parsedArgs);
     }
 
 }

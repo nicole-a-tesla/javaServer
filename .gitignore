@@ -2,6 +2,7 @@
 
 *.iml
 runserver
+debugdump.txt
 
 ## Directory-based project format:
 .idea/

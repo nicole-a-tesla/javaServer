@@ -1,25 +1,44 @@
-import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class RequestBuilder {
     Request request;
-    String requestString;
-    String[] slicedRequest;
+    ArrayList<String> requestLines;
 
-    public RequestBuilder(String requestString) {
-        this.requestString = requestString;
-        this.slicedRequest = requestString.split("\r\n");
+    public RequestBuilder() throws IOException {
         this.request = new Request();
     }
 
-    public Request build() {
-        setFirstLineAttrs();
-        setHeaders();
+    public Request build(BufferedReader requestStream) throws IOException {
+        try {
+            this.requestLines = getRequestLines(requestStream);
+            setFirstLineAttrs();
+            setHeaders();
+
+        } catch (Exception e) {
+            return request;
+        }
+
         return request;
     }
 
+    private ArrayList<String> getRequestLines(BufferedReader requestStream) throws IOException {
+
+        String line;
+        ArrayList<String> linesSoFar = new ArrayList();
+
+        while (!Objects.equals(line = requestStream.readLine(), "")) {
+            linesSoFar.add(line);
+        }
+
+        return linesSoFar;
+    }
+
     private void setFirstLineAttrs() {
-        String[] firstLineParts = slicedRequest[0].split(" ");
+        String[] firstLineParts = requestLines.get(0).split(" ");
 
         request.method = firstLineParts[0];
         request.resource = firstLineParts[1];
@@ -31,12 +50,15 @@ public class RequestBuilder {
     }
 
     private HashMap<String, String> buildHeaderHash() {
-        String[] elements = Arrays.copyOfRange(slicedRequest, 1, slicedRequest.length);
+        ArrayList<String> headerElements = (ArrayList) requestLines.clone();
+        headerElements.remove(0);
+
         HashMap<String, String> headerMap = new HashMap<>();
 
-        for (String element : elements) {
+        for (String element : headerElements) {
             setHeader(element, headerMap);
         }
+
         return headerMap;
     }
 
