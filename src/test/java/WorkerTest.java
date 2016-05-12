@@ -37,7 +37,7 @@ public class WorkerTest {
         Request request = Helper.buildRequestFromString("GET /file1 HTTP/1.0\r\n\r\n");
         Response response = worker.getResponse(request);
 
-        String expectedBody = "file1 contents";
+        String expectedBody = "\r\nfile1 contents\r\n\r\n";
 
         assertEquals(expectedBody, response.body);
     }

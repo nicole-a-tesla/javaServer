@@ -38,7 +38,7 @@ public class ResponseBuilder {
 
     private void setBody() {
         try {
-            response.body = args[1];
+            response.body = "\r\n" + args[1] + "\r\n\r\n";
         } catch (ArrayIndexOutOfBoundsException e) {
             response.body = "";
         }

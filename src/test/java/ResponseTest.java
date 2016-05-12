@@ -24,17 +24,17 @@ public class ResponseTest {
 
     @Test
     public void testHasBody() {
-        assertEquals("body", response.body);
+        assertEquals("\r\nbody\r\n\r\n", response.body);
     }
 
     @Test
     public void testHasContentLengthEqualToBodyLength(){
-        assertEquals(Integer.toString(response.body.length()), response.getHeader("Content-Length:"));
+        assertEquals("4", response.getHeader("Content-Length:"));
     }
 
     @Test
     public void testResponseToString() {
-        String expectedString = "HTTP/1.0 200 OK\r\nContent-Length: 4\r\nContent-Type: text/html\r\nbody";
+        String expectedString = "HTTP/1.0 200 OK\r\nContent-Length: 4\r\nContent-Type: text/html\r\n\r\nbody\r\n\r\n";
         String actualString = response.toString();
         assertEquals(expectedString, actualString);
     }
