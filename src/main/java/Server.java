@@ -4,19 +4,17 @@ import java.net.Socket;
 import java.util.HashMap;
 
 public class Server {
-    public String BASE_DIR;
-    public int PORT;
     ServerSocket serverSocket;
 
     public void setUp(HashMap args) throws IOException {
-        BASE_DIR = (String) args.getOrDefault("-d", "/Users/bears8yourface/IdeaProjects/javaServer/cob_spec/public/");
-        PORT = (Integer) args.getOrDefault("-p", 5000);
+        String baseDir = (String) args.getOrDefault("-d", "/Users/bears8yourface/IdeaProjects/javaServer/cob_spec/public/");
+        System.setProperty("baseDir", baseDir);
 
     }
 
     public void start(HashMap args) throws IOException {
         setUp(args);
-        serverSocket = new ServerSocket(PORT);
+        serverSocket = new ServerSocket((Integer) args.getOrDefault("-p", 5000));
 
         while (true) {
             Socket clientSocket = serverSocket.accept();
