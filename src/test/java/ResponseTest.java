@@ -12,8 +12,7 @@ public class ResponseTest {
     public void setUp() throws IOException {
         String resourcePath = System.getProperty("user.dir") + "/src/test/testResources/file1";
         Resource resource = new Resource(resourcePath);
-        BsResponse bsResponse = new BsResponse("200 OK", resource);
-        response = new ResponseBuilder(bsResponse).build();
+        response = new ResponseBuilder("200 OK", resource).build();
     }
 
     @Test

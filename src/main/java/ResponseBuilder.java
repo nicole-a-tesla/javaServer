@@ -1,12 +1,18 @@
 import java.util.HashMap;
 
 public class ResponseBuilder {
-    private final BsResponse bsResponse;
+    private final String status;
+    private final IResource resource;
     public Response response;
 
-    public ResponseBuilder(BsResponse bsResponse) {
+    public ResponseBuilder(String status, IResource resource) {
         this.response = new Response();
-        this.bsResponse = bsResponse;
+        this.status = status;
+        this.resource = resource;
+    }
+
+    public ResponseBuilder(String status) {
+        this(status, new NullResource());
     }
 
     public Response build() {
@@ -16,29 +22,24 @@ public class ResponseBuilder {
         return response;
     }
 
+    private void setStatusCode() {
+        response.statusCode = status;
+    }
+
     private void setHeaders() {
         HashMap<String, String> headersMap = new HashMap<>();
         headersMap.put("Content-Type:", "text/html");
-        headersMap.put("Content-Length:", bsResponse.getContentLength());
+        headersMap.put("Content-Length:", getContentLength());
 
         response.headers = headersMap;
     }
 
-    private void setStatusCode() {
-        response.statusCode = bsResponse.getStatus();
-    }
-
-    private String getBody() {
-        String body;
-        try {
-            body = "\r\n" + bsResponse.getResource().stringData() + "\r\n\r\n";
-        } catch (NullPointerException e) {
-            body = "";
-        }
-        return body;
-    }
-
     private void setBody() {
-        response.body = getBody();
+        response.body = resource.getBody();
     }
+
+    private String getContentLength() {
+        return resource.getContentLength();
+    }
+
 }

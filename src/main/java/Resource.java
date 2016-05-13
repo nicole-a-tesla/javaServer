@@ -3,9 +3,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
 
-public class Resource {
-    private String mimeType;
-    private byte[] byteData;
+public class Resource implements IResource {
+    private final String mimeType;
+    private final byte[] byteData;
 
     public Resource(String path) throws IOException {
         byteData = getByteData(path);
@@ -37,8 +37,14 @@ public class Resource {
         return byteData;
     }
 
-    public String stringData() {
-        return new String(byteData);
+    @Override
+    public String getBody() {
+        return "\r\n" + new String(byteData) + "\r\n\r\n";
+    }
+
+    @Override
+    public String getContentLength() {
+        return Integer.toString(byteData().length);
     }
 
     private HashMap<String, String> buildTypeMap() {
