@@ -1,12 +1,12 @@
 import java.util.HashMap;
 
 public class ResponseBuilder {
+    private final BsResponse bsResponse;
     public Response response;
-    private String[] args;
 
-    public ResponseBuilder(String[] args) {
+    public ResponseBuilder(BsResponse bsResponse) {
         this.response = new Response();
-        this.args = args;
+        this.bsResponse = bsResponse;
     }
 
     public Response build() {
@@ -19,28 +19,26 @@ public class ResponseBuilder {
     private void setHeaders() {
         HashMap<String, String> headersMap = new HashMap<>();
         headersMap.put("Content-Type:", "text/html");
-        headersMap.put("Content-Length:", getContentLength());
+        headersMap.put("Content-Length:", bsResponse.getContentLength());
 
         response.headers = headersMap;
     }
 
-    private String getContentLength() {
-        if (args.length > 1) {
-            return Integer.toString(args[1].length());
-        } else {
-            return "0";
-        }
+    private void setStatusCode() {
+        response.statusCode = bsResponse.getStatus();
     }
 
-    private void setStatusCode() {
-        response.statusCode = args[0];
+    private String getBody() {
+        String body;
+        try {
+            body = "\r\n" + bsResponse.getResource().stringData() + "\r\n\r\n";
+        } catch (NullPointerException e) {
+            body = "";
+        }
+        return body;
     }
 
     private void setBody() {
-        try {
-            response.body = "\r\n" + args[1] + "\r\n\r\n";
-        } catch (ArrayIndexOutOfBoundsException e) {
-            response.body = "";
-        }
+        response.body = getBody();
     }
 }

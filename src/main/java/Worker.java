@@ -1,42 +1,36 @@
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Objects;
 
 public class Worker {
     public Response getResponse(Request request) throws IOException {
-        String[] args;
+        BsResponse bsResponse;
 
         if (Objects.equals(request.method, "GET")) {
-            args = handleGET(request);
+            bsResponse = handleGET(request);
         } else {
-            args = handleOtherRequests();
+            bsResponse = handleOtherRequests();
         }
 
-        return new ResponseBuilder(args).build();
+        return new ResponseBuilder(bsResponse).build();
     }
 
-    private String[] handleGET(Request request) throws IOException {
+    private BsResponse handleGET(Request request) throws IOException {
         if (Objects.equals(request.resource, "/")) {
-            return new String[]{"200 OK"};
+            return new BsResponse("200 OK", null);
         }
 
-        String dir = "/Users/bears8yourface/IdeaProjects/javaServer/cob_spec/public/";
-        File file = new File(dir + request.resource);
+        File file = new File(System.getProperty("baseDir") + request.resource);
 
         if (file.exists()) {
-            return new String[]{"200 OK", getFileContents(file)};
+            Resource resource = new Resource(file.getPath());
+            return new BsResponse("200 OK", resource);
         } else {
-            return new String[]{"404 Not Found"};
+            return new BsResponse("404 Not Found", null);
         }
     }
 
-    private String[] handleOtherRequests() {
-        return new String[]{"200 OK"};
-    }
-
-    private String getFileContents(File file) throws IOException {
-        byte[] encoded = Files.readAllBytes(file.toPath());
-        return new String(encoded);
+    private BsResponse handleOtherRequests() {
+        return new BsResponse("200 OK", null);
     }
 }
