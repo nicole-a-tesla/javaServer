@@ -19,14 +19,15 @@ public class Server {
         while (true) {
             Socket clientSocket = serverSocket.accept();
 
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             Request request = new RequestBuilder().build(in);
             Response response = new Worker().getResponse(request);
 
-            out.print(response.toString());
-            out.close();
+            OutputStream outStream = clientSocket.getOutputStream();
+            ResponsePrinter printer = new ResponsePrinter(response, outStream);
+            printer.printToOutStream();
+            outStream.close();
         }
     }
 
