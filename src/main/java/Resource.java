@@ -50,6 +50,7 @@ public class Resource implements IResource {
         HashMap<String, String> map = new HashMap<>();
         map.put("png", "image");
         map.put("gif", "image");
+        map.put("jpeg", "image");
         map.put("html", "text");
         return map;
     }
