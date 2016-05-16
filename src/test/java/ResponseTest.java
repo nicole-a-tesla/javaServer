@@ -41,4 +41,9 @@ public class ResponseTest {
         String actualString = response.toString();
         assertEquals(expectedString, actualString);
     }
+
+    @Test
+    public void hasAMimeType() throws Exception {
+        assertEquals("noType/", response.mimeType);
+    }
 }

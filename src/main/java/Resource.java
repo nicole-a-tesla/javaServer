@@ -23,10 +23,9 @@ public class Resource implements IResource {
             fileSuffix = "";
         }
 
-        String fileMetaType = mimeTypeMap.get(fileSuffix);
+        String fileMetaType = mimeTypeMap.getOrDefault(fileSuffix, "noType");
 
         return fileMetaType + "/" + fileSuffix;
-
     }
 
     public String mimeType() {
@@ -39,7 +38,7 @@ public class Resource implements IResource {
 
     @Override
     public String getBody() {
-        return "\r\n" + new String(byteData) + "\r\n\r\n";
+        return new String(byteData);
     }
 
     @Override

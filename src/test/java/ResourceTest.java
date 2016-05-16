@@ -37,7 +37,7 @@ public class ResourceTest {
     @Test
     public void returnsCorrectStringData() throws IOException {
         Resource resource = new Resource(testResourceDir + "/file1");
-        String expectedData = "\r\nfile1 contents\r\n\r\n";
+        String expectedData = "file1 contents";
 
         assertEquals(expectedData, resource.getBody());
     }
