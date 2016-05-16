@@ -19,6 +19,7 @@ public class ResponseBuilder {
         setStatusCode();
         setHeaders();
         setBody();
+        setMimeType();
         return response;
     }
 
@@ -35,11 +36,19 @@ public class ResponseBuilder {
     }
 
     private void setBody() {
-        response.body = resource.getBody();
+        if (resource.getBody().length() == 0) {
+            response.body = "";
+        } else {
+            response.body = resource.getBody();
+        }
     }
 
     private String getContentLength() {
         return resource.getContentLength();
+    }
+
+    private void setMimeType() {
+        response.mimeType = resource.mimeType();
     }
 
 }

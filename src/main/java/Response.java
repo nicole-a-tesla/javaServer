@@ -5,21 +5,22 @@ public class Response {
     public String statusCode;
     public HashMap<String, String> headers;
     public String body;
+    public String mimeType;
+    private String crlf = "\r\n";;
 
     public String getHeader(String headerKey) {
         return headers.get(headerKey);
     }
 
-    public String toString() {
-        return "HTTP/1.0 " + statusCode + headersToString() + body;
+    public String toFormattedString() {
+        return "HTTP/1.0 " + statusCode + headersToString() + crlf + body + crlf + crlf;
     }
 
-    private String headersToString() {
-        String lineBreak = "\r\n";
-        String headerString = lineBreak;
+    public String headersToString() {
+        String headerString = crlf;
 
         for(Map.Entry<String, String> entry : headers.entrySet()) {
-            headerString += entry.getKey() + " " + entry.getValue() + lineBreak;
+            headerString += entry.getKey() + " " + entry.getValue() + crlf;
         }
 
         return headerString;
