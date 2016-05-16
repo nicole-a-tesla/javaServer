@@ -27,7 +27,7 @@ public class ResponsePrinterTest {
 
     @Test
     public void canWriteHttpVersion() {
-        assertTrue(outString.contains("HTTP/1.0"));
+        assertTrue(outString.contains("HTTP/1.1"));
     }
 
     @Test

@@ -37,7 +37,7 @@ public class ResponseTest {
 
     @Test
     public void testResponseToFormattedString() {
-        String expectedString = "HTTP/1.0 200 OK\r\nContent-Length: 14\r\nContent-Type: text/html\r\n\r\nfile1 contents\r\n\r\n";
+        String expectedString = "HTTP/1.1 200 OK\r\nContent-Length: 14\r\nContent-Type: text/html\r\n\r\nfile1 contents\r\n\r\n";
         String actualString = response.toFormattedString();
         assertEquals(expectedString, actualString);
     }

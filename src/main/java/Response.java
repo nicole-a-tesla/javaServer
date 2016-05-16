@@ -13,7 +13,7 @@ public class Response {
     }
 
     public String toFormattedString() {
-        return "HTTP/1.0 " + statusCode + headersToString() + crlf + body + crlf + crlf;
+        return "HTTP/1.1 " + statusCode + headersToString() + crlf + body + crlf + crlf;
     }
 
     public String headersToString() {
