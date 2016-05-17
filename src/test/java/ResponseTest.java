@@ -27,7 +27,7 @@ public class ResponseTest {
 
     @Test
     public void testHasBody() {
-        assertEquals("\r\nfile1 contents\r\n\r\n", response.body);
+        assertEquals("file1 contents", response.body);
     }
 
     @Test
@@ -36,9 +36,9 @@ public class ResponseTest {
     }
 
     @Test
-    public void testResponseToString() {
-        String expectedString = "HTTP/1.0 200 OK\r\nContent-Length: 14\r\nContent-Type: text/html\r\n\r\nfile1 contents\r\n\r\n";
-        String actualString = response.toString();
+    public void testResponseToFormattedString() {
+        String expectedString = "HTTP/1.1 200 OK\r\nContent-Length: 14\r\nContent-Type: text/html\r\n\r\nfile1 contents\r\n\r\n";
+        String actualString = response.toFormattedString();
         assertEquals(expectedString, actualString);
     }
 
