@@ -47,11 +47,6 @@ public class Resource implements IResource {
     }
 
     @Override
-    public String getBody() {
-        return new String(byteData);
-    }
-
-    @Override
     public String getContentLength() {
         return Integer.toString(byteData().length);
     }

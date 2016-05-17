@@ -5,11 +5,6 @@ public class NullResource implements IResource {
     }
 
     @Override
-    public String getBody() {
-        return "";
-    }
-
-    @Override
     public String mimeType() {
         return "";
     }

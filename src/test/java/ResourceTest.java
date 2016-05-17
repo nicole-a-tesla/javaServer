@@ -1,6 +1,8 @@
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.*;
@@ -33,7 +35,7 @@ public class ResourceTest {
     }
 
     @Test
-    public void returnsCorrectByteData() throws IOException {
+    public void returnsCorrectByteDataForText() throws IOException {
         Resource resource = new Resource(testResourceDir + "/file1");
         byte[] expectedData = "file1 contents".getBytes();
 
@@ -41,10 +43,13 @@ public class ResourceTest {
     }
 
     @Test
-    public void returnsCorrectStringData() throws IOException {
-        Resource resource = new Resource(testResourceDir + "/file1");
-        String expectedData = "file1 contents";
+    public void returnsCorrectByteDataForImage() throws IOException {
+        String path = testResourceDir + "/image.png";
+        Resource resource = new Resource(path);
 
-        assertEquals(expectedData, resource.getBody());
+        File file = new File(path);
+        byte[] expectedData = Files.readAllBytes(file.toPath());
+
+        assertArrayEquals(expectedData, resource.byteData());
     }
 }
