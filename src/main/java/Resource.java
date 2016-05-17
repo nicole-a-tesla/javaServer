@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Resource implements IResource {
     private final String mimeType;
@@ -14,18 +15,27 @@ public class Resource implements IResource {
 
     private String getMimeType(String path) {
         HashMap<String, String> mimeTypeMap = buildTypeMap();
-        String fileSuffix;
+        String fileSubType = "";
 
         String[] parts = path.split("\\.");
+
         if (parts.length >= 2) {
-            fileSuffix = parts[1];
-        } else {
-            fileSuffix = "";
+            fileSubType = (Objects.equals(parts[1], "txt")) ? "plain" : parts[1];
         }
 
-        String fileMetaType = mimeTypeMap.getOrDefault(fileSuffix, "noType");
+        String fileType = mimeTypeMap.getOrDefault(fileSubType, "noType");
 
-        return fileMetaType + "/" + fileSuffix;
+        return fileType + "/" + fileSubType;
+    }
+
+    private HashMap<String, String> buildTypeMap() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("png", "image");
+        map.put("gif", "image");
+        map.put("jpeg", "image");
+        map.put("html", "text");
+        map.put("plain", "text");
+        return map;
     }
 
     public String mimeType() {
@@ -44,15 +54,6 @@ public class Resource implements IResource {
     @Override
     public String getContentLength() {
         return Integer.toString(byteData().length);
-    }
-
-    private HashMap<String, String> buildTypeMap() {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("png", "image");
-        map.put("gif", "image");
-        map.put("jpeg", "image");
-        map.put("html", "text");
-        return map;
     }
 
     private byte[] getByteData(String filePath) throws IOException {

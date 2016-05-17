@@ -27,6 +27,12 @@ public class ResourceTest {
     }
 
     @Test
+    public void returnsPlainTextType() throws Exception {
+        Resource resource = new Resource(testResourceDir + "/text-file.txt");
+        assertEquals("text/plain", resource.mimeType());
+    }
+
+    @Test
     public void returnsCorrectByteData() throws IOException {
         Resource resource = new Resource(testResourceDir + "/file1");
         byte[] expectedData = "file1 contents".getBytes();

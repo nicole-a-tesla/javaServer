@@ -10,7 +10,7 @@ public class ResponseTest {
 
     @Before
     public void setUp() throws IOException {
-        String resourcePath = System.getProperty("user.dir") + "/src/test/testResources/file1";
+        String resourcePath = System.getProperty("user.dir") + "/src/test/testResources/text-file.txt";
         Resource resource = new Resource(resourcePath);
         response = new ResponseBuilder("200 OK", resource).build();
     }
@@ -22,7 +22,7 @@ public class ResponseTest {
 
     @Test
     public void testHasContentTypeHeader() {
-        assertEquals("text/html", response.getHeader("Content-Type:"));
+        assertEquals("text/plain", response.getHeader("Content-Type:"));
     }
 
     @Test
@@ -35,8 +35,4 @@ public class ResponseTest {
         assertEquals("14", response.getHeader("Content-Length:"));
     }
 
-    @Test
-    public void hasAMimeType() throws Exception {
-        assertEquals("noType/", response.mimeType);
-    }
 }

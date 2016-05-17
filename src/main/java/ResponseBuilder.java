@@ -31,7 +31,7 @@ public class ResponseBuilder {
     private HashMap<String, String> getHeaders() {
         HashMap<String, String> headersMap = new HashMap<>();
 
-        headersMap.put("Content-Type:", "text/html");
+        headersMap.put("Content-Type:", getMimeType());
         headersMap.put("Content-Length:", getContentLength());
 
         return headersMap;
