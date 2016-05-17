@@ -1,15 +1,18 @@
 import org.junit.Test;
 import org.junit.Before;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 
 public class ResponseTest {
     public Response response;
 
     @Before
-    public void setUp() {
-        String[] args = {"200 OK", "body"};
-        response = new ResponseBuilder(args).build();
+    public void setUp() throws IOException {
+        String resourcePath = System.getProperty("user.dir") + "/src/test/testResources/file1";
+        Resource resource = new Resource(resourcePath);
+        response = new ResponseBuilder("200 OK", resource).build();
     }
 
     @Test
@@ -24,18 +27,23 @@ public class ResponseTest {
 
     @Test
     public void testHasBody() {
-        assertEquals("\r\nbody\r\n\r\n", response.body);
+        assertEquals("\r\nfile1 contents\r\n\r\n", response.body);
     }
 
     @Test
     public void testHasContentLengthEqualToBodyLength(){
-        assertEquals("4", response.getHeader("Content-Length:"));
+        assertEquals("14", response.getHeader("Content-Length:"));
     }
 
     @Test
     public void testResponseToString() {
-        String expectedString = "HTTP/1.0 200 OK\r\nContent-Length: 4\r\nContent-Type: text/html\r\n\r\nbody\r\n\r\n";
+        String expectedString = "HTTP/1.0 200 OK\r\nContent-Length: 14\r\nContent-Type: text/html\r\n\r\nfile1 contents\r\n\r\n";
         String actualString = response.toString();
         assertEquals(expectedString, actualString);
+    }
+
+    @Test
+    public void hasAMimeType() throws Exception {
+        assertEquals("noType/", response.mimeType);
     }
 }

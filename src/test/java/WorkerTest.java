@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import java.io.*;
+import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 
@@ -33,7 +34,13 @@ public class WorkerTest {
     }
 
     @Test
-    public void respondsWithBody() throws IOException {
+    public void navigatesCorrectFilePathToContent() throws IOException {
+        Server server = new Server();
+        HashMap args = new HashMap();
+        String testResourceDir = System.getProperty("user.dir") + "/src/test/testResources";
+        args.put("-d", testResourceDir);
+        server.setUp(args);
+
         Request request = Helper.buildRequestFromString("GET /file1 HTTP/1.0\r\n\r\n");
         Response response = worker.getResponse(request);
 

@@ -1,42 +1,44 @@
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Objects;
 
 public class Worker {
+
+    public static final String OK_STATUS = "200 OK";
+    public static final String NOT_FOUND_STATUS = "404 Not Found";
+
     public Response getResponse(Request request) throws IOException {
-        String[] args;
-
         if (Objects.equals(request.method, "GET")) {
-            args = handleGET(request);
+            return handleGET(request);
         } else {
-            args = handleOtherRequests();
+            return handleOtherRequests();
         }
-
-        return new ResponseBuilder(args).build();
     }
 
-    private String[] handleGET(Request request) throws IOException {
+    private Response handleGET(Request request) throws IOException {
         if (Objects.equals(request.resource, "/")) {
-            return new String[]{"200 OK"};
+            return bodylessResponse(OK_STATUS);
         }
 
-        String dir = "/Users/bears8yourface/IdeaProjects/javaServer/cob_spec/public/";
-        File file = new File(dir + request.resource);
+        File file = new File(System.getProperty("baseDir") + request.resource);
 
         if (file.exists()) {
-            return new String[]{"200 OK", getFileContents(file)};
+            Resource resource = new Resource(file.getPath());
+            return bodyfulResponse(OK_STATUS, resource);
         } else {
-            return new String[]{"404 Not Found"};
+            return bodylessResponse(NOT_FOUND_STATUS);
         }
     }
 
-    private String[] handleOtherRequests() {
-        return new String[]{"200 OK"};
+    private Response handleOtherRequests() {
+        return bodylessResponse(OK_STATUS);
     }
 
-    private String getFileContents(File file) throws IOException {
-        byte[] encoded = Files.readAllBytes(file.toPath());
-        return new String(encoded);
+    private Response bodyfulResponse(String status, Resource resource) {
+        return new ResponseBuilder(status, resource).build();
+    }
+
+    private Response bodylessResponse(String status) {
+        return new ResponseBuilder(status).build();
     }
 }
