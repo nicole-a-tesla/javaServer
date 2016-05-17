@@ -38,7 +38,7 @@ public class WorkerTest {
 
         String expectedBody = "file1 contents";
 
-        assertEquals(expectedBody, response.body);
+        assertEquals(expectedBody, new String(response.body));
     }
 
 }

@@ -13,4 +13,9 @@ public class NullResource implements IResource {
     public String mimeType() {
         return "";
     }
+
+    @Override
+    public byte[] byteData() {
+        return new byte[0];
+    }
 }

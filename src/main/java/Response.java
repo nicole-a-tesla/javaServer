@@ -4,16 +4,20 @@ import java.util.Map;
 public class Response {
     public String statusCode;
     public HashMap<String, String> headers;
-    public String body;
+    public byte[] body;
     public String mimeType;
-    private String crlf = "\r\n";;
+    private String crlf = "\r\n";
 
     public String getHeader(String headerKey) {
         return headers.get(headerKey);
     }
 
-    public String toFormattedString() {
-        return "HTTP/1.1 " + statusCode + headersToString() + crlf + body + crlf + crlf;
+    public byte[] formattedHeader() {
+        return ("HTTP/1.1 " + statusCode + headersToString() + crlf).getBytes();
+    }
+
+    public byte[] responseEnd() {
+        return (crlf + crlf).getBytes();
     }
 
     public String headersToString() {

@@ -7,7 +7,7 @@ public class Server {
     ServerSocket serverSocket;
 
     public void setUp(HashMap args) throws IOException {
-        String baseDir = (String) args.getOrDefault("-d", "/Users/bears8yourface/IdeaProjects/javaServer/cob_spec/public");
+        String baseDir = (String) args.getOrDefault("-d", "/Users/bears8yourface/IdeaProjects/cob_spec/public");
         System.setProperty("baseDir", baseDir);
 
     }

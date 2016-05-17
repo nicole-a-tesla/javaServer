@@ -3,4 +3,6 @@ public interface IResource {
     public String getBody();
 
     String mimeType();
+
+    byte[] byteData();
 }

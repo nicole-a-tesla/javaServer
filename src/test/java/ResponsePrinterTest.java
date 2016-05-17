@@ -35,4 +35,11 @@ public class ResponsePrinterTest {
         assertTrue(outString.contains("Content-Type:"));
         assertTrue(outString.contains("Content-Length:"));
     }
+
+    @Test
+    public void outputIsProperlyFormatted() {
+        String expectedString = "HTTP/1.1 200 OK\r\nContent-Length: 14\r\nContent-Type: text/html\r\n\r\nfile1 contents\r\n\r\n";
+        String actualString = outString;
+        assertEquals(expectedString, actualString);
+    }
 }

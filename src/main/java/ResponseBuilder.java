@@ -37,9 +37,9 @@ public class ResponseBuilder {
 
     private void setBody() {
         if (resource.getBody().length() == 0) {
-            response.body = "";
+            response.body = "".getBytes();
         } else {
-            response.body = resource.getBody();
+            response.body = resource.byteData();
         }
     }
 

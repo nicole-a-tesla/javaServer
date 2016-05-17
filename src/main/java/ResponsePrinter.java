@@ -12,7 +12,9 @@ public class ResponsePrinter {
     }
 
     public void printToOutStream() throws IOException {
-        out.write(response.toFormattedString().getBytes());
+        out.write(response.formattedHeader());
+        out.write(response.body);
+        out.write(response.responseEnd());
     }
 
     public void close() throws IOException {
