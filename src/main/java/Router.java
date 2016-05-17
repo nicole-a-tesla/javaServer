@@ -4,20 +4,31 @@ import java.util.HashMap;
 public class Router {
     protected HashMap<String, HashMap<String, Handler>> routes;
     private HashMap<String, Handler> getRoutes;
+    private HashMap<String, Handler> optionsRoutes;
 
     public Router() {
         this.routes = new HashMap<>();
         this.getRoutes = new HashMap<>();
+        this.optionsRoutes = new HashMap<>();
 
         loadGETRoutes();
+        loadOPTIONSRoutes();
         loadRoutes();
     }
 
     private void loadGETRoutes() {
         getRoutes.put("/method_options", new MethodOptionsHandler());
         getRoutes.put("/method_options2", new MethodOptions2Handler());
+
+        getRoutes.put("/tea", new TeapotHandler());
+        getRoutes.put("/coffee", new TeapotHandler());
+
         getRoutes.put("resource_request", new ResourceHandler());
 
+    }
+
+    private void loadOPTIONSRoutes() {
+        optionsRoutes.put("/method_options2", new MethodOptions2Handler());
     }
 
     private void loadRoutes() {

@@ -51,6 +51,22 @@ public class RouterTest {
     }
 
     @Test
+    public void routesToTeapotHandlerForTea() throws Exception {
+        Request request = Helper.buildRequestFromString("GET /tea HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+
+        assertEquals(TeapotHandler.class, handler.getClass());
+    }
+
+    @Test
+    public void routesToTeapotHandlerForCoffee() throws Exception {
+        Request request = Helper.buildRequestFromString("GET /coffee HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+
+        assertEquals(TeapotHandler.class, handler.getClass());
+    }
+
+    @Test
     public void fileCheckTrueForRealFile() throws Exception {
         assertTrue(router.isFile("/file1"));
     }

@@ -7,7 +7,7 @@ public class MethodOptionsHandler2Test {
     @Test
     public void includesOptionsHeader() throws Exception {
         Request request = Helper.buildRequestFromString("GET /method_options2 HTTP/1.1\r\n\r\n");
-        Handler handler = new Router().getHandlerFor(request);
+        Handler handler = new MethodOptions2Handler();
         Response response = handler.getResponseFor(request);
 
         assertTrue(response.headersToString().contains("GET,OPTIONS"));
