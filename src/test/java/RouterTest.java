@@ -26,6 +26,23 @@ public class RouterTest {
     }
 
     @Test
+    public void routesToMethodOptions2HandlerViaGet() throws Exception {
+        Request request = Helper.buildRequestFromString("GET /method_options2 HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+
+        assertEquals(MethodOptions2Handler.class, handler.getClass());
+    }
+
+
+    @Test
+    public void routesToMethodOptions2HandlerViaOption() throws Exception {
+        Request request = Helper.buildRequestFromString("OPTIONS /method_options2 HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+
+        assertEquals(MethodOptions2Handler.class, handler.getClass());
+    }
+
+    @Test
     public void routesToResourceHandler() throws Exception {
         Request request = Helper.buildRequestFromString("GET /text-file.txt HTTP/1.1\r\n\r\n");
         Handler handler = router.getHandlerFor(request);

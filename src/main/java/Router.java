@@ -15,7 +15,9 @@ public class Router {
 
     private void loadGETRoutes() {
         getRoutes.put("/method_options", new MethodOptionsHandler());
+        getRoutes.put("/method_options2", new MethodOptions2Handler());
         getRoutes.put("resource_request", new ResourceHandler());
+
     }
 
     private void loadRoutes() {
