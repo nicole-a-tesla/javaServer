@@ -25,7 +25,7 @@ public class RequestTest {
 
     @Test
     public void testGetRequestResource() {
-        assertEquals("/", request.resource);
+        assertEquals("/", request.route);
     }
 
     @Test

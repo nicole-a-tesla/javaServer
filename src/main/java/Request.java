@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public class Request {
     public String method;
-    public String resource;
+    public String route;
     public String httpVersion;
     public HashMap<String, String> headers;
 

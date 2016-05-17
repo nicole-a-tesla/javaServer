@@ -16,11 +16,11 @@ public class Worker {
     }
 
     private Response handleGET(Request request) throws IOException {
-        if (Objects.equals(request.resource, "/")) {
+        if (Objects.equals(request.route, "/")) {
             return bodylessResponse(OK_STATUS);
         }
 
-        File file = new File(System.getProperty("baseDir") + request.resource);
+        File file = new File(System.getProperty("baseDir") + request.route);
 
         if (file.exists()) {
             Resource resource = new Resource(file.getPath());

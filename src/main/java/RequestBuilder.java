@@ -41,7 +41,7 @@ public class RequestBuilder {
         String[] firstLineParts = requestLines.get(0).split(" ");
 
         request.method = firstLineParts[0];
-        request.resource = firstLineParts[1];
+        request.route = firstLineParts[1];
         request.httpVersion = firstLineParts[2];
     }
 
