@@ -9,7 +9,6 @@ public class Server {
     public void setUp(HashMap args) throws IOException {
         String baseDir = (String) args.getOrDefault("-d", "/Users/bears8yourface/IdeaProjects/cob_spec/public");
         System.setProperty("baseDir", baseDir);
-
     }
 
     public void start(HashMap args) throws IOException {
@@ -22,7 +21,9 @@ public class Server {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             Request request = new RequestBuilder().build(in);
-            Response response = new Worker().getResponse(request);
+
+            Handler handler = new Router().getHandlerFor(request);
+            Response response = handler.getResponseFor(request);
 
             OutputStream outStream = clientSocket.getOutputStream();
             ResponsePrinter printer = new ResponsePrinter(response, outStream);
