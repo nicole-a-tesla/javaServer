@@ -16,39 +16,37 @@ public class ResponseBuilder {
     }
 
     public Response build() {
-        setStatusCode();
-        setHeaders();
-        setBody();
-        setMimeType();
+        response.statusCode = getStatusCode();
+        response.headers = getHeaders();
+        response.body = getBody();
+        response.mimeType = getMimeType();
+        
         return response;
     }
 
-    private void setStatusCode() {
-        response.statusCode = status;
+    private String getStatusCode() {
+        return status;
     }
 
-    private void setHeaders() {
+    private HashMap<String, String> getHeaders() {
         HashMap<String, String> headersMap = new HashMap<>();
+
         headersMap.put("Content-Type:", "text/html");
         headersMap.put("Content-Length:", getContentLength());
 
-        response.headers = headersMap;
+        return headersMap;
     }
 
-    private void setBody() {
-        if (resource.getBody().length() == 0) {
-            response.body = "".getBytes();
-        } else {
-            response.body = resource.byteData();
-        }
+    private byte[] getBody() {
+        return resource.byteData();
     }
 
     private String getContentLength() {
         return resource.getContentLength();
     }
 
-    private void setMimeType() {
-        response.mimeType = resource.mimeType();
+    private String getMimeType() {
+        return resource.mimeType();
     }
 
 }
