@@ -1,3 +1,4 @@
+import nmccabe.Resource;
 import org.junit.Test;
 
 import java.io.File;

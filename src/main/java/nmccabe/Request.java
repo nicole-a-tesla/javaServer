@@ -1,3 +1,5 @@
+package nmccabe;
+
 import java.util.HashMap;
 
 public class Request {

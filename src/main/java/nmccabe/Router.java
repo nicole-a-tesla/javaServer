@@ -1,3 +1,7 @@
+package nmccabe;
+
+import nmccabe.Handlers.*;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Objects;
@@ -75,7 +79,7 @@ public class Router {
         return (Handler) subRoutes.getOrDefault(route, new Handler());
     }
 
-    protected boolean isFile(String route) {
+    public boolean isFile(String route) {
         File file = new File(System.getProperty("baseDir") + route);
         return file.exists();
     }

@@ -1,3 +1,5 @@
+package nmccabe;
+
 public interface IResource {
     public String getContentLength();
 

@@ -1,3 +1,7 @@
+import nmccabe.Resource;
+import nmccabe.Response;
+import nmccabe.ResponseBuilder;
+import nmccabe.ResponsePrinter;
 import org.junit.Before;
 import org.junit.Test;
 

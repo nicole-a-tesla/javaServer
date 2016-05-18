@@ -1,3 +1,6 @@
+import nmccabe.Handlers.PutHandler;
+import nmccabe.Request;
+import nmccabe.Response;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

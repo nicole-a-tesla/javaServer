@@ -1,3 +1,5 @@
+import nmccabe.Request;
+import nmccabe.RequestBuilder;
 import org.junit.Test;
 import org.junit.Before;
 

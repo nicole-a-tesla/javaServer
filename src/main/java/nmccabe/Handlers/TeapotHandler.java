@@ -1,3 +1,9 @@
+package nmccabe.Handlers;
+
+import nmccabe.Request;
+import nmccabe.Response;
+import nmccabe.ResponseBuilder;
+
 import java.util.Objects;
 
 public class TeapotHandler extends Handler {

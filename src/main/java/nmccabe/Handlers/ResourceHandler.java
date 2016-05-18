@@ -1,3 +1,10 @@
+package nmccabe.Handlers;
+
+import nmccabe.Request;
+import nmccabe.Resource;
+import nmccabe.Response;
+import nmccabe.ResponseBuilder;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
