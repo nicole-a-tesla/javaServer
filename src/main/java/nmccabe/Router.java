@@ -67,16 +67,28 @@ public class Router {
     }
 
     public Handler getHandlerFor(Request request) {
-        return fetchFromRoutes(request.method, request.route);
+        if (routes.keySet().contains(request.method)) {
+            return fetchFromRoutes(request.method, request.route);
+        } else {
+            return new MethodNotAllowedHandler();
+        }
     }
 
     private Handler fetchFromRoutes(String method, String route) {
-        if (isFile(route) && Objects.equals(method, "GET")) {
+        if (isResourceRequest(method, route)) {
             return getRoutes.get("resource_request");
         }
 
+        if (Objects.equals(method, "HEAD")) {
+            return headRoutes.get("/");
+        }
+
         HashMap subRoutes = routes.getOrDefault(method, getRoutes);
-        return (Handler) subRoutes.getOrDefault(route, new Handler());
+        return (Handler) subRoutes.getOrDefault(route, new MethodNotAllowedHandler());
+    }
+
+    private boolean isResourceRequest(String method, String route) {
+        return Objects.equals(method, "GET") && !getRoutes.keySet().contains(route);
     }
 
     public boolean isFile(String route) {

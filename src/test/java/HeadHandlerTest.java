@@ -13,4 +13,12 @@ public class HeadHandlerTest {
 
         assertEquals("200 OK", response.statusCode);
     }
+
+    @Test
+    public void returns404ForRequestToOtherStuff() throws Exception {
+        Request request = Helper.buildRequestFromString("HEAD /teeth-are-your-skeleton-escaping HTTP/1.0\r\n\r\n");
+        Response response = new HeadHandler().getResponseFor(request);
+
+        assertEquals("404 Not Found", response.statusCode);
+    }
 }

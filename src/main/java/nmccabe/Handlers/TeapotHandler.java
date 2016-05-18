@@ -2,7 +2,6 @@ package nmccabe.Handlers;
 
 import nmccabe.Request;
 import nmccabe.Response;
-import nmccabe.ResponseBuilder;
 
 import java.util.Objects;
 
@@ -11,9 +10,11 @@ public class TeapotHandler extends Handler {
 
     @Override
     public Response getResponseFor(Request request) {
+        String status = IM_A_TEAPOT;
+
         if (Objects.equals(request.route, "/tea")) {
-            return new ResponseBuilder(OK_STATUS).build();
+            status = OK_STATUS;
         }
-        return new ResponseBuilder(IM_A_TEAPOT).build();
+        return buildResponseForStatus(status);
     }
 }
