@@ -33,13 +33,23 @@ public class RouterTest {
     }
 
     @Test
-    public void returnsGenericHandlerAnd404AsDefault() throws Exception {
+    public void returnsGenericHandlerAnd404ForGETToNonexistentResource() throws Exception {
         Request request = Helper.buildRequestFromString("GET /what-is-this-fiiiiiiiile HTTP/1.1\r\n\r\n");
         Handler handler = router.getHandlerFor(request);
         Response response = handler.getResponseFor(request);
 
-        assertEquals(Handler.class, handler.getClass());
+        assertEquals(ResourceHandler.class, handler.getClass());
         assertEquals("404 Not Found", response.statusCode);
+    }
+
+    @Test
+    public void returns405ForNonsenseMethod() throws Exception {
+        Request request = Helper.buildRequestFromString("GOO /file1 HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+        Response response = handler.getResponseFor(request);
+
+        assertEquals(MethodNotAllowedHandler.class, handler.getClass());
+        assertEquals("405 Method Not Allowed", response.statusCode);
     }
 
     @Test
@@ -100,11 +110,11 @@ public class RouterTest {
     }
 
     @Test
-    public void routesToDefaultHandlerForPostToGarbage() throws Exception {
-        Request request = Helper.buildRequestFromString("POST /blerfgorp HTTP/1.1\r\n\r\n");
+    public void routesTo405NotALlowedForPostToNotPostable() throws Exception {
+        Request request = Helper.buildRequestFromString("POST /file1 HTTP/1.1\r\n\r\n");
         Handler handler = router.getHandlerFor(request);
 
-        assertEquals(Handler.class, handler.getClass());
+        assertEquals(MethodNotAllowedHandler.class, handler.getClass());
     }
 
     @Test
@@ -120,7 +130,7 @@ public class RouterTest {
         Request request = Helper.buildRequestFromString("PUT /flogbarber HTTP/1.1\r\n\r\n");
         Handler handler = router.getHandlerFor(request);
 
-        assertEquals(Handler.class, handler.getClass());
+        assertEquals(MethodNotAllowedHandler.class, handler.getClass());
     }
 
     @Test
@@ -132,11 +142,11 @@ public class RouterTest {
     }
 
     @Test
-    public void fallsThroughToDefault404HandlerIfRequestsToNonRoot() throws Exception {
+    public void routesToHeadHandlerIfRequestsToNonRoot() throws Exception {
         Request request = Helper.buildRequestFromString("HEAD /helloThere HTTP/1.1\r\n\r\n");
         Handler handler = router.getHandlerFor(request);
 
-        assertEquals(Handler.class, handler.getClass());
+        assertEquals(HeadHandler.class, handler.getClass());
     }
 }
 
