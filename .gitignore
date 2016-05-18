@@ -3,11 +3,15 @@
 *.iml
 runserver
 debugdump.txt
+settings.gradle
+gradlew.bat
+gradlew
+build.gradle
 
 ## Directory-based project format:
 .idea/
-cob_spec/
 build/
+gradle/
 # if you remove the above rule, at least ignore the following:
 
 # User-specific stuff:
