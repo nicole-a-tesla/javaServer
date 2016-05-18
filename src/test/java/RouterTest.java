@@ -18,6 +18,26 @@ public class RouterTest {
     }
 
     @Test
+    public void fileCheckTrueForRealFile() throws Exception {
+        assertTrue(router.isFile("/file1"));
+    }
+
+    @Test
+    public void fileCheckFalseForUnrealFile() throws Exception {
+        assertFalse(router.isFile("/fakeFile"));
+    }
+
+    @Test
+    public void returnsGenericHandlerAnd404AsDefault() throws Exception {
+        Request request = Helper.buildRequestFromString("GET /what-is-this-fiiiiiiiile HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+        Response response = handler.getResponseFor(request);
+
+        assertEquals(Handler.class, handler.getClass());
+        assertEquals("404 Not Found", response.statusCode);
+    }
+
+    @Test
     public void routesToMethodOptionsHandler() throws Exception {
         Request request = Helper.buildRequestFromString("GET /method_options HTTP/1.1\r\n\r\n");
         Handler handler = router.getHandlerFor(request);
@@ -67,24 +87,19 @@ public class RouterTest {
     }
 
     @Test
-    public void fileCheckTrueForRealFile() throws Exception {
-        assertTrue(router.isFile("/file1"));
-    }
-
-    @Test
-    public void fileCheckFalseForUnrealFile() throws Exception {
-        assertFalse(router.isFile("/fakeFile"));
-    }
-
-    @Test
-    public void returnsGenericHandlerAnd404AsDefault() throws Exception {
-        Request request = Helper.buildRequestFromString("GET /what-is-this-fiiiiiiiile HTTP/1.1\r\n\r\n");
+    public void routesToPostForPostToForm() throws Exception {
+        Request request = Helper.buildRequestFromString("POST /form HTTP/1.1\r\n\r\n");
         Handler handler = router.getHandlerFor(request);
-        Response response = handler.getResponseFor(request);
+
+        assertEquals(PostHandler.class, handler.getClass());
+    }
+
+    @Test
+    public void routesToDefaultHandlerForPostToGarbage() throws Exception {
+        Request request = Helper.buildRequestFromString("POST /blerfgorp HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
 
         assertEquals(Handler.class, handler.getClass());
-        assertEquals("404 Not Found", response.statusCode);
-
     }
 }
 

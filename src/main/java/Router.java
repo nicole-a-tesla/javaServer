@@ -1,18 +1,22 @@
 import java.io.File;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Router {
     protected HashMap<String, HashMap<String, Handler>> routes;
     private HashMap<String, Handler> getRoutes;
     private HashMap<String, Handler> optionsRoutes;
+    private HashMap<String, Handler> postRoutes;
 
     public Router() {
         this.routes = new HashMap<>();
         this.getRoutes = new HashMap<>();
         this.optionsRoutes = new HashMap<>();
+        this.postRoutes = new HashMap<>();
 
         loadGETRoutes();
         loadOPTIONSRoutes();
+        loadPOSTRoutes();
         loadRoutes();
     }
 
@@ -31,8 +35,14 @@ public class Router {
         optionsRoutes.put("/method_options2", new MethodOptions2Handler());
     }
 
+    private void loadPOSTRoutes() {
+        postRoutes.put("/form", new PostHandler());
+    }
+
     private void loadRoutes() {
         routes.put("GET", getRoutes);
+        routes.put("OPTIONS", optionsRoutes);
+        routes.put("POST", postRoutes);
     }
 
     public Handler getHandlerFor(Request request) {
@@ -40,13 +50,12 @@ public class Router {
     }
 
     private Handler fetchFromRoutes(String method, String route) {
-        HashMap subRoutes = routes.getOrDefault(method, getRoutes);
-
-        if (isFile(route)) {
-            return (Handler) subRoutes.get("resource_request");
-        } else {
-            return (Handler) subRoutes.getOrDefault(route, new Handler());
+        if (isFile(route) && Objects.equals(method, "GET")) {
+            return getRoutes.get("resource_request");
         }
+
+        HashMap subRoutes = routes.getOrDefault(method, getRoutes);
+        return (Handler) subRoutes.getOrDefault(route, new Handler());
     }
 
     protected boolean isFile(String route) {
