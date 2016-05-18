@@ -2,20 +2,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-public class Worker {
+public class ResourceHandler extends Handler {
 
-    public static final String OK_STATUS = "200 OK";
-    public static final String NOT_FOUND_STATUS = "404 Not Found";
-
-    public Response getResponse(Request request) throws IOException {
-        if (Objects.equals(request.method, "GET")) {
-            return handleGET(request);
-        } else {
-            return handleOtherRequests();
-        }
+    @Override
+    public Response getResponseFor(Request request) throws IOException {
+        return handleGET(request);
     }
 
-    private Response handleGET(Request request) throws IOException {
+    public Response handleGET(Request request) throws IOException {
         if (Objects.equals(request.route, "/")) {
             return bodylessResponse(OK_STATUS);
         }
@@ -30,9 +24,6 @@ public class Worker {
         }
     }
 
-    private Response handleOtherRequests() {
-        return bodylessResponse(OK_STATUS);
-    }
 
     private Response bodyfulResponse(String status, Resource resource) {
         return new ResponseBuilder(status, resource).build();
