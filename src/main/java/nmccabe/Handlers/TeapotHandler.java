@@ -10,11 +10,14 @@ public class TeapotHandler extends Handler {
 
     @Override
     public Response getResponseFor(Request request) {
-        String status = IM_A_TEAPOT;
 
         if (Objects.equals(request.route, "/tea")) {
-            status = OK_STATUS;
+            return buildResponseForStatus(OK_STATUS);
+        } else if (Objects.equals(request.route, "/coffee")){
+            Response response = buildResponseForStatus(IM_A_TEAPOT);
+            response.addBody("I'm a teapot".getBytes());
+            return response;
         }
-        return buildResponseForStatus(status);
+        return buildResponseForStatus(NOT_ALLOWED_STATUS);
     }
 }

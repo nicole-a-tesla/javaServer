@@ -35,4 +35,9 @@ public class Response {
     public void addHeader(String key, String value) {
         headers.put(key, value);
     }
+
+    public void addBody(byte[] bodyBytes) {
+        body = bodyBytes;
+    }
+
 }

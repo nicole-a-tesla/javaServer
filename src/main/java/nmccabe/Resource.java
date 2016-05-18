@@ -1,7 +1,5 @@
 package nmccabe;
 
-import nmccabe.IResource;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -42,10 +40,12 @@ public class Resource implements IResource {
         return map;
     }
 
+    @Override
     public String mimeType() {
         return mimeType;
     }
 
+    @Override
     public byte[] byteData() {
         return byteData;
     }

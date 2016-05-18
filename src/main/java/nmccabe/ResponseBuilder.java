@@ -1,9 +1,5 @@
 package nmccabe;
 
-import nmccabe.IResource;
-import nmccabe.NullResource;
-import nmccabe.Response;
-
 import java.util.HashMap;
 
 public class ResponseBuilder {
