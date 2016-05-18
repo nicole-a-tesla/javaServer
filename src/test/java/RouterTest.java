@@ -117,5 +117,21 @@ public class RouterTest {
 
         assertEquals(Handler.class, handler.getClass());
     }
+
+    @Test
+    public void routesToHeadHandler() throws Exception {
+        Request request = Helper.buildRequestFromString("HEAD / HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+
+        assertEquals(HeadHandler.class, handler.getClass());
+    }
+
+    @Test
+    public void fallsThroughToDefault404HandlerIfRequestsToNonRoot() throws Exception {
+        Request request = Helper.buildRequestFromString("HEAD /helloThere HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+
+        assertEquals(Handler.class, handler.getClass());
+    }
 }
 
