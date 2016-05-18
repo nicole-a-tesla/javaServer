@@ -39,7 +39,7 @@ public class RouterTest {
 
     @Test
     public void routesToMethodOptionsHandler() throws Exception {
-        Request request = Helper.buildRequestFromString("GET /method_options HTTP/1.1\r\n\r\n");
+        Request request = Helper.buildRequestFromString("OPTIONS /method_options HTTP/1.1\r\n\r\n");
         Handler handler = router.getHandlerFor(request);
 
         assertEquals(MethodOptionsHandler.class, handler.getClass());
@@ -47,7 +47,7 @@ public class RouterTest {
 
     @Test
     public void routesToMethodOptions2HandlerViaGet() throws Exception {
-        Request request = Helper.buildRequestFromString("GET /method_options2 HTTP/1.1\r\n\r\n");
+        Request request = Helper.buildRequestFromString("OPTIONS /method_options2 HTTP/1.1\r\n\r\n");
         Handler handler = router.getHandlerFor(request);
 
         assertEquals(MethodOptions2Handler.class, handler.getClass());

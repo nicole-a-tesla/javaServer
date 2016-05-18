@@ -21,9 +21,6 @@ public class Router {
     }
 
     private void loadGETRoutes() {
-        getRoutes.put("/method_options", new MethodOptionsHandler());
-        getRoutes.put("/method_options2", new MethodOptions2Handler());
-
         getRoutes.put("/tea", new TeapotHandler());
         getRoutes.put("/coffee", new TeapotHandler());
 
@@ -33,6 +30,7 @@ public class Router {
 
     private void loadOPTIONSRoutes() {
         optionsRoutes.put("/method_options2", new MethodOptions2Handler());
+        optionsRoutes.put("/method_options", new MethodOptionsHandler());
     }
 
     private void loadPOSTRoutes() {
