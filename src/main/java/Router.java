@@ -7,16 +7,20 @@ public class Router {
     private HashMap<String, Handler> getRoutes;
     private HashMap<String, Handler> optionsRoutes;
     private HashMap<String, Handler> postRoutes;
+    private HashMap<String, Handler> putRoutes;
+
 
     public Router() {
         this.routes = new HashMap<>();
         this.getRoutes = new HashMap<>();
         this.optionsRoutes = new HashMap<>();
         this.postRoutes = new HashMap<>();
+        this.putRoutes = new HashMap<>();
 
         loadGETRoutes();
         loadOPTIONSRoutes();
         loadPOSTRoutes();
+        loadPUTRoutes();
         loadRoutes();
     }
 
@@ -37,10 +41,15 @@ public class Router {
         postRoutes.put("/form", new PostHandler());
     }
 
+    private void loadPUTRoutes() {
+        putRoutes.put("/form", new PutHandler());
+    }
+
     private void loadRoutes() {
         routes.put("GET", getRoutes);
         routes.put("OPTIONS", optionsRoutes);
         routes.put("POST", postRoutes);
+        routes.put("PUT", putRoutes);
     }
 
     public Handler getHandlerFor(Request request) {

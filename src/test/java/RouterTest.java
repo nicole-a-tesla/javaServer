@@ -101,5 +101,21 @@ public class RouterTest {
 
         assertEquals(Handler.class, handler.getClass());
     }
+
+    @Test
+    public void routesPutHandlerForPutRequestToForm() throws Exception {
+        Request request = Helper.buildRequestFromString("PUT /form HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+
+        assertEquals(PutHandler.class, handler.getClass());
+    }
+
+    @Test
+    public void routesDefaultHandlerForPutRequestToGarbage() throws Exception {
+        Request request = Helper.buildRequestFromString("PUT /flogbarber HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+
+        assertEquals(Handler.class, handler.getClass());
+    }
 }
 
