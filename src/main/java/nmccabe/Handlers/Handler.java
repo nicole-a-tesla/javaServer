@@ -1,5 +1,6 @@
 package nmccabe.Handlers;
 
+import nmccabe.IResource;
 import nmccabe.Request;
 import nmccabe.Response;
 import nmccabe.ResponseBuilder;
@@ -12,6 +13,14 @@ public class Handler {
     public static final String NOT_ALLOWED_STATUS = "405 Method Not Allowed";
 
     public Response getResponseFor(Request request) throws IOException {
-        return new ResponseBuilder(NOT_ALLOWED_STATUS).build();
+        return buildResponseForStatus(NOT_ALLOWED_STATUS);
+    }
+
+    public Response buildResponseForStatus(String status) {
+        return new ResponseBuilder(status).build();
+    }
+
+    public Response buildResponseForStatus(String status, IResource resource) {
+        return new ResponseBuilder(status, resource).build();
     }
 }

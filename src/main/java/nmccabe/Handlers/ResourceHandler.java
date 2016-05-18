@@ -3,7 +3,6 @@ package nmccabe.Handlers;
 import nmccabe.Request;
 import nmccabe.Resource;
 import nmccabe.Response;
-import nmccabe.ResponseBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,10 +32,10 @@ public class ResourceHandler extends Handler {
 
 
     private Response bodyfulResponse(String status, Resource resource) {
-        return new ResponseBuilder(status, resource).build();
+        return buildResponseForStatus(status, resource);
     }
 
     private Response bodylessResponse(String status) {
-        return new ResponseBuilder(status).build();
+        return buildResponseForStatus(status);
     }
 }
