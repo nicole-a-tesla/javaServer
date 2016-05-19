@@ -148,5 +148,13 @@ public class RouterTest {
 
         assertEquals(HeadHandler.class, handler.getClass());
     }
+
+    @Test
+    public void routesToDeleteHandlerOnDELETE() throws Exception {
+        Request request = Helper.buildRequestFromString("DELETE /form HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+
+        assertEquals(DeleteHandler.class, handler.getClass());
+    }
 }
 

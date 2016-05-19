@@ -13,6 +13,7 @@ public class Router {
     private HashMap<String, Handler> postRoutes;
     private HashMap<String, Handler> putRoutes;
     private HashMap<String, Handler> headRoutes;
+    private HashMap<String, Handler> deleteRoutes;
 
 
 
@@ -23,12 +24,14 @@ public class Router {
         this.postRoutes = new HashMap<>();
         this.putRoutes = new HashMap<>();
         this.headRoutes = new HashMap<>();
+        this.deleteRoutes = new HashMap<>();
 
         loadGETRoutes();
         loadOPTIONSRoutes();
         loadPOSTRoutes();
         loadPUTRoutes();
         loadHEADRoutes();
+        loadDELETERoutes();
         loadRoutes();
     }
 
@@ -58,12 +61,17 @@ public class Router {
         headRoutes.put("/", new HeadHandler());
     }
 
+    private void loadDELETERoutes() {
+        deleteRoutes.put("/form", new DeleteHandler());
+    }
+
     private void loadRoutes() {
         routes.put("GET", getRoutes);
         routes.put("OPTIONS", optionsRoutes);
         routes.put("POST", postRoutes);
         routes.put("PUT", putRoutes);
         routes.put("HEAD", headRoutes);
+        routes.put("DELETE", deleteRoutes);
     }
 
     public Handler getHandlerFor(Request request) {
@@ -75,9 +83,14 @@ public class Router {
     }
 
     private Handler fetchFromRoutes(String method, String route) {
-        if (isResourceRequest(method, route)) {
+        if (isResourceRequest(route) && Objects.equals(method, "GET")) {
             return getRoutes.get("resource_request");
         }
+
+        if (Objects.equals(method, "DELETE")) {
+            return deleteRoutes.get("/form");
+        }
+
 
         if (Objects.equals(method, "HEAD")) {
             return headRoutes.get("/");
@@ -87,8 +100,8 @@ public class Router {
         return (Handler) subRoutes.getOrDefault(route, new MethodNotAllowedHandler());
     }
 
-    private boolean isResourceRequest(String method, String route) {
-        return Objects.equals(method, "GET") && !getRoutes.keySet().contains(route);
+    private boolean isResourceRequest(String route) {
+        return !getRoutes.keySet().contains(route);
     }
 
     public boolean isFile(String route) {
