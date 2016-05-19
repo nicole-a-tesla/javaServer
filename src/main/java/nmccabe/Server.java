@@ -21,11 +21,9 @@ public class Server {
 
         while (true) {
             Socket clientSocket = serverSocket.accept();
+            InputStream rawInputStream = clientSocket.getInputStream();
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-            Request request = new RequestBuilder().build(in);
-
+            Request request = new RequestBuilder().build(rawInputStream);
             Handler handler = new Router().getHandlerFor(request);
             Response response = handler.getResponseFor(request);
 

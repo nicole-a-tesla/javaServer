@@ -1,24 +1,25 @@
 package nmccabe;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class RequestBuilder {
     Request request;
     ArrayList<String> requestLines;
     private int headersBodyBreakIndex;
+    private String carriageReturn = "\r\n";
 
     public RequestBuilder() throws IOException {
         this.request = new Request();
     }
 
-    public Request build(BufferedReader requestStream) throws IOException {
+    public Request build(InputStream rawInputStream) throws IOException {
         try {
-            this.requestLines = getRequestLines(requestStream);
+            this.requestLines = getRequestAsArray(rawInputStream);
             this.headersBodyBreakIndex = this.requestLines.indexOf("");
             setFirstLineAttrs();
             setHeaders();
@@ -31,14 +32,16 @@ public class RequestBuilder {
         return request;
     }
 
-    private ArrayList<String> getRequestLines(BufferedReader requestStream) throws IOException {
-        String line;
-        ArrayList<String> linesSoFar = new ArrayList();
+    private ArrayList<String> getRequestAsArray(InputStream rawInputStream) throws IOException {
+        String requestString = getRequestString(rawInputStream);
+        String[] requestArray = requestString.split(carriageReturn);
+        return new ArrayList<String>(Arrays.asList(requestArray));
+    }
 
-        while (!Objects.equals(line = requestStream.readLine(), null)) {
-            linesSoFar.add(line);
-        }
-        return linesSoFar;
+    private String getRequestString(InputStream rawInputStream) throws IOException {
+        byte[] data = new byte[18000];
+        rawInputStream.read(data);
+        return new String(data);
     }
 
     private void setFirstLineAttrs() {
@@ -74,15 +77,16 @@ public class RequestBuilder {
     }
 
     private void setBodyIfPresent() {
-        List<String> bodyBits = requestLines.subList(headersBodyBreakIndex + 1, requestLines.lastIndexOf(""));
-        String allTheBits = "";
-
-        for (String bit : bodyBits) {
-            allTheBits += bit;
-            allTheBits += "\r\n";
-        }
-
-        request.body = allTheBits;
+        List<String> bodyParts = requestLines.subList(headersBodyBreakIndex + 1, requestLines.size() - 1);
+        request.body = buildBodyString(bodyParts);
     }
 
+    private String buildBodyString(List<String> bodyParts) {
+        StringBuilder wholeBody = new StringBuilder();
+
+        for (String part : bodyParts)
+            wholeBody.append(part).append(carriageReturn);
+
+        return wholeBody.toString();
+    }
 }

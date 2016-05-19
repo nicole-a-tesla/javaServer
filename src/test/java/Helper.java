@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 public class Helper {
     public static Request buildRequestFromString(String string) throws IOException {
         InputStream inputStream = new ByteArrayInputStream(string.getBytes());
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        return new RequestBuilder().build(bufferedReader);
+        return new RequestBuilder().build(inputStream);
     }
 }

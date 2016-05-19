@@ -10,7 +10,7 @@ public class Request {
     public String body = "";
 
     public String getHeader(String headerKey) {
-        return this.headers.get(headerKey);
+        return this.headers.getOrDefault(headerKey, "Header Not Found");
     }
 
 }
