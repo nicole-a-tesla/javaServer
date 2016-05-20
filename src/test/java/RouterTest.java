@@ -1,8 +1,6 @@
+import nmccabe.*;
 import nmccabe.Handlers.*;
-import nmccabe.Request;
-import nmccabe.Response;
-import nmccabe.Router;
-import nmccabe.Server;
+import nmccabe.Helper;
 import org.junit.Before;
 import org.junit.Test;
 

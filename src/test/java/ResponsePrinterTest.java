@@ -1,9 +1,6 @@
+import nmccabe.*;
 import nmccabe.Handlers.TeapotHandler;
-import nmccabe.Resource;
-import nmccabe.Response;
-import nmccabe.Request;
-import nmccabe.ResponseBuilder;
-import nmccabe.ResponsePrinter;
+import nmccabe.Helper;
 import org.junit.Before;
 import org.junit.Test;
 

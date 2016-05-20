@@ -1,5 +1,6 @@
 import nmccabe.Handlers.Handler;
 import nmccabe.Handlers.MethodOptions2Handler;
+import nmccabe.Helper;
 import nmccabe.Request;
 import nmccabe.Response;
 import org.junit.Test;

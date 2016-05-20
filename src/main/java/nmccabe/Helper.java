@@ -1,8 +1,5 @@
 package nmccabe;
 
-import nmccabe.Request;
-import nmccabe.RequestBuilder;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
