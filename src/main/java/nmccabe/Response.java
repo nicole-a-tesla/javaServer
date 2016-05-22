@@ -38,6 +38,11 @@ public class Response {
 
     public void addBody(byte[] bodyBytes) {
         body = bodyBytes;
+        updateContentLength();
+    }
+
+    private void updateContentLength() {
+        addHeader("Content-Length:", String.valueOf(body.length));
     }
 
 }

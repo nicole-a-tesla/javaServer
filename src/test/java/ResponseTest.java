@@ -49,7 +49,9 @@ public class ResponseTest {
     public void bodyCanBeAdded() throws Exception {
         Response bodylessResponse = new ResponseBuilder("200 OK", new NullResource()).build();
         bodylessResponse.addBody("Bod".getBytes());
+
         assertEquals("Bod", new String(bodylessResponse.body));
+        assertEquals("3", bodylessResponse.getHeader("Content-Length:"));
     }
 
 }

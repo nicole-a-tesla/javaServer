@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 
 public class PostHandlerTest {
     String testFileName = "/testForm";
-    String testFilePath = System.getProperty("baseDir")  + testFileName;
+    String testFilePath;
     Request postRequest;
     File testFile;
 
@@ -22,6 +22,7 @@ public class PostHandlerTest {
     @Before
     public void setUp() throws IOException {
         new Server().setUp(new HashMap());
+        testFilePath = System.getProperty("baseDir")  + testFileName;
         postRequest = Helper.buildRequestFromString("POST " + testFileName + " HTTP/1.0\r\n\r\ndata=whoa\r\n\r\n");
         testFile = new File(testFilePath);
         testFile.createNewFile();
