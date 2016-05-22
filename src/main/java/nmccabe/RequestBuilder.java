@@ -34,7 +34,8 @@ public class RequestBuilder {
 
     private ArrayList<String> getRequestAsArray(InputStream rawInputStream) throws IOException {
         String requestString = getRequestString(rawInputStream);
-        String[] requestArray = requestString.split(carriageReturn);
+        String realCharsOnly = requestString.split("\u0000")[0];
+        String[] requestArray = realCharsOnly.split(carriageReturn);
         return new ArrayList<String>(Arrays.asList(requestArray));
     }
 
@@ -77,7 +78,7 @@ public class RequestBuilder {
     }
 
     private void setBodyIfPresent() {
-        List<String> bodyParts = requestLines.subList(headersBodyBreakIndex + 1, requestLines.size() - 1);
+        List<String> bodyParts = requestLines.subList(headersBodyBreakIndex + 1, requestLines.size());
         request.body = buildBodyString(bodyParts);
     }
 
