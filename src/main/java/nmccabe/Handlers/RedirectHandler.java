@@ -9,7 +9,7 @@ public class RedirectHandler extends Handler {
     @Override
     public Response getResponseFor(Request request) {
         Response response =  new ResponseBuilder(FOUND_STATUS).build();
-        response.addHeader("Location", "http://localhost:5000/");
+        response.addHeader("Location:", "http://localhost:5000/");
         return response;
     }
 }
