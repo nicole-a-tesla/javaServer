@@ -154,5 +154,13 @@ public class RouterTest {
 
         assertEquals(DeleteHandler.class, handler.getClass());
     }
+
+    @Test
+    public void routesToRedirectHandlerOnGETToRedirect() throws Exception {
+        Request request = Helper.buildRequestFromString("GET /redirect HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+
+        assertEquals(RedirectHandler.class, handler.getClass());
+    }
 }
 
