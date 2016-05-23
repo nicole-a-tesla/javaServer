@@ -20,7 +20,7 @@ public class RequestBuilder {
     public Request build(InputStream rawInputStream) throws IOException {
         try {
             this.requestLines = getRequestAsArray(rawInputStream);
-            this.headersBodyBreakIndex = this.requestLines.indexOf("");
+            this.headersBodyBreakIndex = getHeaderBodyBreak();
             setFirstLineAttrs();
             setHeaders();
             setBodyIfPresent();
@@ -30,6 +30,16 @@ public class RequestBuilder {
         }
 
         return request;
+    }
+
+    private int getHeaderBodyBreak() {
+        int possibleBreakPoint = this.requestLines.indexOf("");
+
+        if (possibleBreakPoint == -1) {
+            return this.requestLines.size();
+        } else {
+            return possibleBreakPoint;
+        }
     }
 
     private ArrayList<String> getRequestAsArray(InputStream rawInputStream) throws IOException {

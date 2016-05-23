@@ -46,7 +46,7 @@ public class RequestTest {
 
     @Test
     public void getBody() {
-        assertEquals("body\r\n\r\n", request.body);
+        assertEquals("body\r\n", request.body);
     }
 
     @Test
