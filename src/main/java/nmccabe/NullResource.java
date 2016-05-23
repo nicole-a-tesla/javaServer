@@ -1,7 +1,5 @@
 package nmccabe;
 
-import nmccabe.IResource;
-
 public class NullResource implements IResource {
     @Override
     public String getContentLength() {

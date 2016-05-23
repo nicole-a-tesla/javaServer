@@ -1,9 +1,5 @@
 package nmccabe;
 
-import nmccabe.IResource;
-import nmccabe.NullResource;
-import nmccabe.Response;
-
 import java.util.HashMap;
 
 public class ResponseBuilder {
@@ -22,11 +18,11 @@ public class ResponseBuilder {
     }
 
     public Response build() {
-        response.statusCode = getStatusCode();
-        response.headers = getHeaders();
         response.body = getBody();
         response.mimeType = getMimeType();
-        
+        response.headers = getHeaders();
+        response.statusCode = getStatusCode();
+
         return response;
     }
 
@@ -37,8 +33,8 @@ public class ResponseBuilder {
     private HashMap<String, String> getHeaders() {
         HashMap<String, String> headersMap = new HashMap<>();
 
-        headersMap.put("Content-Type:", getMimeType());
         headersMap.put("Content-Length:", getContentLength());
+        headersMap.put("Content-Type:", getMimeType());
 
         return headersMap;
     }

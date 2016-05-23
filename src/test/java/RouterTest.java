@@ -1,8 +1,6 @@
+import nmccabe.*;
 import nmccabe.Handlers.*;
-import nmccabe.Request;
-import nmccabe.Response;
-import nmccabe.Router;
-import nmccabe.Server;
+import nmccabe.Helper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -106,7 +104,7 @@ public class RouterTest {
         Request request = Helper.buildRequestFromString("POST /form HTTP/1.1\r\n\r\n");
         Handler handler = router.getHandlerFor(request);
 
-        assertEquals(PostHandler.class, handler.getClass());
+        assertEquals(AddingStuffHandler.class, handler.getClass());
     }
 
     @Test
@@ -122,7 +120,7 @@ public class RouterTest {
         Request request = Helper.buildRequestFromString("PUT /form HTTP/1.1\r\n\r\n");
         Handler handler = router.getHandlerFor(request);
 
-        assertEquals(PutHandler.class, handler.getClass());
+        assertEquals(AddingStuffHandler.class, handler.getClass());
     }
 
     @Test
@@ -147,6 +145,14 @@ public class RouterTest {
         Handler handler = router.getHandlerFor(request);
 
         assertEquals(HeadHandler.class, handler.getClass());
+    }
+
+    @Test
+    public void routesToDeleteHandlerOnDELETE() throws Exception {
+        Request request = Helper.buildRequestFromString("DELETE /form HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+
+        assertEquals(DeleteHandler.class, handler.getClass());
     }
 }
 

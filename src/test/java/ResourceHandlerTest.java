@@ -1,4 +1,5 @@
 import nmccabe.Handlers.ResourceHandler;
+import nmccabe.Helper;
 import nmccabe.Request;
 import nmccabe.Response;
 import nmccabe.Server;

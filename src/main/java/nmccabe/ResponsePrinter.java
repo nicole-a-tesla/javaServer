@@ -1,7 +1,5 @@
 package nmccabe;
 
-import nmccabe.Response;
-
 import java.io.IOException;
 import java.io.OutputStream;
 

@@ -1,26 +1,29 @@
 package nmccabe;
 
-import nmccabe.Request;
-
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Objects;
+import java.util.List;
 
 public class RequestBuilder {
     Request request;
     ArrayList<String> requestLines;
+    private int headersBodyBreakIndex;
+    private String carriageReturn = "\r\n";
 
     public RequestBuilder() throws IOException {
         this.request = new Request();
     }
 
-    public Request build(BufferedReader requestStream) throws IOException {
+    public Request build(InputStream rawInputStream) throws IOException {
         try {
-            this.requestLines = getRequestLines(requestStream);
+            this.requestLines = getRequestAsArray(rawInputStream);
+            this.headersBodyBreakIndex = getHeaderBodyBreak();
             setFirstLineAttrs();
             setHeaders();
+            setBodyIfPresent();
 
         } catch (Exception e) {
             return request;
@@ -29,16 +32,27 @@ public class RequestBuilder {
         return request;
     }
 
-    private ArrayList<String> getRequestLines(BufferedReader requestStream) throws IOException {
+    private int getHeaderBodyBreak() {
+        int possibleBreakPoint = this.requestLines.indexOf("");
 
-        String line;
-        ArrayList<String> linesSoFar = new ArrayList();
-
-        while (!Objects.equals(line = requestStream.readLine(), "")) {
-            linesSoFar.add(line);
+        if (possibleBreakPoint == -1) {
+            return this.requestLines.size();
+        } else {
+            return possibleBreakPoint;
         }
+    }
 
-        return linesSoFar;
+    private ArrayList<String> getRequestAsArray(InputStream rawInputStream) throws IOException {
+        String requestString = getRequestString(rawInputStream);
+        String realCharsOnly = requestString.split("\u0000")[0];
+        String[] requestArray = realCharsOnly.split(carriageReturn);
+        return new ArrayList<String>(Arrays.asList(requestArray));
+    }
+
+    private String getRequestString(InputStream rawInputStream) throws IOException {
+        byte[] data = new byte[18000];
+        rawInputStream.read(data);
+        return new String(data);
     }
 
     private void setFirstLineAttrs() {
@@ -54,9 +68,7 @@ public class RequestBuilder {
     }
 
     private HashMap<String, String> buildHeaderHash() {
-        ArrayList<String> headerElements = (ArrayList) requestLines.clone();
-        headerElements.remove(0);
-
+        List<String> headerElements = getJustTheHeaders();
         HashMap<String, String> headerMap = new HashMap<>();
 
         for (String element : headerElements) {
@@ -66,9 +78,26 @@ public class RequestBuilder {
         return headerMap;
     }
 
+    private List getJustTheHeaders() {
+        return requestLines.subList(1, headersBodyBreakIndex);
+    }
+
     private void setHeader(String element, HashMap headerMap) {
         String[] parts = element.split("\\s+");
         headerMap.put(parts[0], parts[1]);
     }
 
+    private void setBodyIfPresent() {
+        List<String> bodyParts = requestLines.subList(headersBodyBreakIndex + 1, requestLines.size());
+        request.body = buildBodyString(bodyParts);
+    }
+
+    private String buildBodyString(List<String> bodyParts) {
+        StringBuilder wholeBody = new StringBuilder();
+
+        for (String part : bodyParts)
+            wholeBody.append(part).append(carriageReturn);
+
+        return wholeBody.toString();
+    }
 }

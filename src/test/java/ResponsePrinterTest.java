@@ -1,7 +1,6 @@
-import nmccabe.Resource;
-import nmccabe.Response;
-import nmccabe.ResponseBuilder;
-import nmccabe.ResponsePrinter;
+import nmccabe.*;
+import nmccabe.Handlers.TeapotHandler;
+import nmccabe.Helper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -45,5 +44,18 @@ public class ResponsePrinterTest {
         String expectedString = "HTTP/1.1 200 OK\r\nContent-Length: 14\r\nContent-Type: noType/\r\n\r\nfile1 contents\r\n\r\n";
         String actualString = outString;
         assertEquals(expectedString, actualString);
+    }
+
+    @Test
+    public void writesBodyAddedByHandler() throws Exception {
+        Request request = Helper.buildRequestFromString("GET /coffee HTTP/1.1\r\n\r\n");
+        Response coffeeResponse = new TeapotHandler().getResponseFor(request);
+
+        ByteArrayOutputStream coffeeOut = new ByteArrayOutputStream();
+        ResponsePrinter printer = new ResponsePrinter(coffeeResponse, coffeeOut);
+        printer.printToOutStream();
+        String coffeeOutString = coffeeOut.toString();
+
+        assertTrue(coffeeOutString.contains("I'm a teapot"));
     }
 }
