@@ -49,11 +49,11 @@ public class Router {
     }
 
     private void loadPOSTRoutes() {
-        postRoutes.put("/form", new PostHandler());
+        postRoutes.put("/form", new AddingStuffHandler());
     }
 
     private void loadPUTRoutes() {
-        putRoutes.put("/form", new PutHandler());
+        putRoutes.put("/form", new AddingStuffHandler());
     }
 
 

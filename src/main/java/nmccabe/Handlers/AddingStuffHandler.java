@@ -6,7 +6,7 @@ import nmccabe.Response;
 
 import java.io.IOException;
 
-public class PostHandler extends Handler {
+public class AddingStuffHandler extends Handler {
     @Override
     public Response getResponseFor(Request request) throws IOException {
         Response response = buildResponseForStatus(OK_STATUS);

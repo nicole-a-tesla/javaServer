@@ -104,7 +104,7 @@ public class RouterTest {
         Request request = Helper.buildRequestFromString("POST /form HTTP/1.1\r\n\r\n");
         Handler handler = router.getHandlerFor(request);
 
-        assertEquals(PostHandler.class, handler.getClass());
+        assertEquals(AddingStuffHandler.class, handler.getClass());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class RouterTest {
         Request request = Helper.buildRequestFromString("PUT /form HTTP/1.1\r\n\r\n");
         Handler handler = router.getHandlerFor(request);
 
-        assertEquals(PutHandler.class, handler.getClass());
+        assertEquals(AddingStuffHandler.class, handler.getClass());
     }
 
     @Test
