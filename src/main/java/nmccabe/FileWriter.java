@@ -12,4 +12,7 @@ public class FileWriter {
         out.close();
     }
 
+    public void deleteFrom(String deleteFrom) throws IOException {
+        write(deleteFrom, "");
+    }
 }
