@@ -30,7 +30,6 @@ public class ResourceHandlerTest {
     public void responds200OKForRealRequest() throws IOException {
         Request request = Helper.buildRequestFromString("GET / HTTP/1.0\r\nI'm-A-Key: I'm-A-Value\r\nAnother-Key: Another-Value\r\n\r\n");
         Response response = new ResourceHandler().getResponseFor(request);
-
         assertEquals("200 OK", response.statusCode);
     }
 

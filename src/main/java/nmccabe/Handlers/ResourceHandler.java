@@ -8,6 +8,7 @@ import nmccabe.URLParametersDecoder;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class ResourceHandler extends Handler {
@@ -27,10 +28,17 @@ public class ResourceHandler extends Handler {
         }
 
         File file = new File(System.getProperty("baseDir") + request.route);
+        String status;
+
+        if (request.getHeader("Range:") == "Header Not Found") {
+            status = OK_STATUS;
+        } else {
+            status = PARTIAL_STATUS;
+        }
 
         if (file.exists()) {
             Resource resource = new Resource(file.getPath());
-            return bodyfulResponse(OK_STATUS, resource);
+            return bodyfulResponse(status, resource, request.headers);
         } else {
             return bodylessResponse(NOT_FOUND_STATUS);
         }
@@ -45,7 +53,9 @@ public class ResourceHandler extends Handler {
         return response;
 
     }
-
+    private Response bodyfulResponse(String status, Resource resource, HashMap requestHeaders) {
+        return buildResponseForStatus(status, resource, requestHeaders);
+    }
 
     private Response bodyfulResponse(String status, Resource resource) {
         return buildResponseForStatus(status, resource);

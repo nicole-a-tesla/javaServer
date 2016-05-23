@@ -1,7 +1,7 @@
-import nmccabe.NullResource;
 import nmccabe.Resource;
 import nmccabe.Response;
 import nmccabe.ResponseBuilder;
+import nmccabe.NullResource;
 import org.junit.Test;
 import org.junit.Before;
 
@@ -11,10 +11,11 @@ import static org.junit.Assert.assertEquals;
 
 public class ResponseTest {
     public Response response;
+    String resourcePath;
 
     @Before
     public void setUp() throws IOException {
-        String resourcePath = System.getProperty("user.dir") + "/src/test/testResources/text-file.txt";
+        resourcePath = System.getProperty("user.dir") + "/src/test/testResources/text-file.txt";
         Resource resource = new Resource(resourcePath);
         response = new ResponseBuilder("200 OK", resource).build();
     }
