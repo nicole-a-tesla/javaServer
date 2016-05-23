@@ -34,11 +34,4 @@ public class Server {
         }
     }
 
-    public void stop() {
-        try {
-            serverSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

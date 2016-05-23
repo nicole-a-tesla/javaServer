@@ -6,6 +6,7 @@ import nmccabe.ResponseBuilder;
 
 public class RedirectHandler extends Handler {
     public static final String FOUND_STATUS = "302 Found";
+
     @Override
     public Response getResponseFor(Request request) {
         Response response =  new ResponseBuilder(FOUND_STATUS).build();

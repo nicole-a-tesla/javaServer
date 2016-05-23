@@ -26,6 +26,6 @@ public class RedirectHandlerTest {
 
     @Test
     public void setsLocationHeader() throws Exception {
-        assertEquals("http://localhost:5000/", response.getHeader("Location"));
+        assertEquals("http://localhost:5000/", response.getHeader("Location:"));
     }
 }
