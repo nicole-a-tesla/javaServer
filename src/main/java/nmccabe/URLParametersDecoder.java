@@ -8,7 +8,7 @@ public class URLParametersDecoder {
         return java.net.URLDecoder.decode(paramsWithSpaces, "UTF-8");
     }
 
-    private String insertSpacesAroundEquals(String baseDecoding) {
-        return baseDecoding.replaceAll("([=])", " $1 ");
+    private String insertSpacesAroundEquals(String params) {
+        return params.replaceAll("([=])", " $1 ");
     }
 }
