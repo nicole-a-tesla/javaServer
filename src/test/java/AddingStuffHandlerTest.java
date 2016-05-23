@@ -50,6 +50,13 @@ public class AddingStuffHandlerTest {
         assertEquals("data=whoa\r\n", new String(getResponse.body));
     }
 
+    @Test
+    public void respondsToPATCHWith204() throws Exception {
+        Request patchRequest = Helper.buildRequestFromString("PATCH " + testFileName + " HTTP/1.0\r\n\r\ndata=whoa\r\n\r\n");
+        Response patchResponse = new AddingStuffHandler().getResponseFor(patchRequest);
+        assertEquals("204 No Content", patchResponse.statusCode);
+    }
+
     @After
     public void tearDown() throws IOException {
         deleteIfExists(testFile.toPath());

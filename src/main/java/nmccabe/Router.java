@@ -14,8 +14,7 @@ public class Router {
     private HashMap<String, Handler> putRoutes;
     private HashMap<String, Handler> headRoutes;
     private HashMap<String, Handler> deleteRoutes;
-
-
+    private HashMap<String, Handler> patchRoutes;
 
     public Router() {
         this.routes = new HashMap<>();
@@ -25,6 +24,7 @@ public class Router {
         this.putRoutes = new HashMap<>();
         this.headRoutes = new HashMap<>();
         this.deleteRoutes = new HashMap<>();
+        this.patchRoutes = new HashMap<>();
 
         loadGETRoutes();
         loadOPTIONSRoutes();
@@ -32,6 +32,7 @@ public class Router {
         loadPUTRoutes();
         loadHEADRoutes();
         loadDELETERoutes();
+        loadPATCHRoutes();
         loadRoutes();
     }
 
@@ -66,6 +67,10 @@ public class Router {
         deleteRoutes.put("/form", new DeleteHandler());
     }
 
+    private void loadPATCHRoutes() {
+        patchRoutes.put("/patch-content.txt", new AddingStuffHandler());
+    }
+
     private void loadRoutes() {
         routes.put("GET", getRoutes);
         routes.put("OPTIONS", optionsRoutes);
@@ -73,6 +78,7 @@ public class Router {
         routes.put("PUT", putRoutes);
         routes.put("HEAD", headRoutes);
         routes.put("DELETE", deleteRoutes);
+        routes.put("PATCH", patchRoutes);
     }
 
     public Handler getHandlerFor(Request request) {

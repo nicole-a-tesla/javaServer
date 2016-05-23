@@ -171,5 +171,13 @@ public class RouterTest {
 
         assertEquals(ResourceHandler.class, handler.getClass());
     }
+
+    @Test
+    public void routesToAddingStuffHandlerOnPATCH() throws Exception {
+        Request request = Helper.buildRequestFromString("PATCH /patch-content.txt HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+
+        assertEquals(AddingStuffHandler.class, handler.getClass());
+    }
 }
 
