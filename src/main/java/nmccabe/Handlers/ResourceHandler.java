@@ -3,9 +3,11 @@ package nmccabe.Handlers;
 import nmccabe.Request;
 import nmccabe.Resource;
 import nmccabe.Response;
+import nmccabe.URLParametersDecoder;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Objects;
 
 public class ResourceHandler extends Handler {
@@ -20,6 +22,10 @@ public class ResourceHandler extends Handler {
             return bodylessResponse(OK_STATUS);
         }
 
+        if (request.route.contains("/parameters?")) {
+            return handleParamsGET(request);
+        }
+
         File file = new File(System.getProperty("baseDir") + request.route);
 
         if (file.exists()) {
@@ -28,6 +34,16 @@ public class ResourceHandler extends Handler {
         } else {
             return bodylessResponse(NOT_FOUND_STATUS);
         }
+    }
+
+    private Response handleParamsGET(Request request) throws UnsupportedEncodingException {
+        Response response = bodylessResponse(OK_STATUS);
+        String params = request.route.split("\\?")[1];
+        String decodedParams = new URLParametersDecoder().decode(params);
+
+        response.addBody(decodedParams.getBytes());
+        return response;
+
     }
 
 
