@@ -36,6 +36,22 @@ public class FileWriterTest {
         assertEquals(writeThis, actual);
     }
 
+    @Test
+    public void appendsToFiles() throws Exception {
+        String writeThis = "Hello?";
+        String writeThisToo = "Hi there!";
+
+        FileWriter writer = new FileWriter();
+        writer.write(testFilePath, writeThis);
+        writer.append(testFilePath, writeThisToo);
+
+        FileReader fileReader = new FileReader(testFilePath);
+        BufferedReader buffReader = new BufferedReader(fileReader);
+        String actual = Helper.readFromBufferToString(buffReader);
+
+        assertEquals(writeThis + writeThisToo, actual);
+    }
+
     @After
     public void tearDown() throws IOException {
         deleteIfExists(testFile.toPath());
