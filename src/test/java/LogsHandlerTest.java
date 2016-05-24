@@ -1,12 +1,10 @@
-import nmccabe.*;
-import nmccabe.Handlers.Handler;
 import nmccabe.Handlers.LogsHandler;
+import nmccabe.*;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.HashMap;
-
 import static org.junit.Assert.assertEquals;
 
 public class LogsHandlerTest {
@@ -16,11 +14,11 @@ public class LogsHandlerTest {
 
     @Before
     public void setUp() throws IOException {
-        new Server().setUp(new HashMap());
-        unauthorizedRequest = Helper.buildRequestFromString("GET /logs HTTP/1.0\r\n\r\n");
+        Helper.configTestServer();
 
+        unauthorizedRequest = Helper.buildRequestFromString("GET /logs HTTP/1.0\r\n\r\n");
         authorizedRequest = Helper.buildRequestFromString("GET /logs HTTP/1.0\r\n\r\n");
-        authorizedRequest.headers.put("Authorization:", "admin:hunter2");
+        authorizedRequest.headers.put("Authorization:", "Basic");
     }
 
     @Test
@@ -42,18 +40,14 @@ public class LogsHandlerTest {
     }
 
     @Test
-    public void returnsLogsForAuthorizedGET() throws Exception {
-        Router router = new Router();
-
-        Request getRootRequest = Helper.buildRequestFromString("GET / HTTP/1.0\r\n\r\n");
-        Request headRequest = Helper.buildRequestFromString("HEAD / HTTP/1.0\r\n\r\n");
-
-        router.getHandlerFor(getRootRequest).getResponseFor(getRootRequest);
-        router.getHandlerFor(headRequest).getResponseFor(headRequest);
-
-        Response response = new LogsHandler().getResponseFor(authorizedRequest);
-        assertEquals("BUTTS", new String(response.body));
-
+    public void returnsLogsFileContentsForAuthorizedGET() throws Exception {
+        String fakeLogFile = System.getProperty("baseDir") + "/file1";
+        Response response = new LogsHandler(fakeLogFile).getResponseFor(authorizedRequest);
+        assertEquals("file1 contents", new String(response.body));
     }
 
+    @After
+    public void tearDown() throws IOException {
+        Helper.tearDownTestServer();
+    }
 }
