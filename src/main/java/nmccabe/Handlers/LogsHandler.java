@@ -8,7 +8,15 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class LogsHandler extends Handler {
-    private final String logFilePath = System.getProperty("baseDir") + "/logs.txt";
+    private String logFilePath;
+
+    public LogsHandler(String logFilePath) {
+       this.logFilePath = logFilePath;
+    }
+
+    public LogsHandler() {
+        this(System.getProperty("baseDir") + "/logs.txt");
+    }
 
     @Override
     public Response getResponseFor(Request request) throws IOException {
@@ -20,7 +28,7 @@ public class LogsHandler extends Handler {
     }
 
     private boolean requestIsAuthorized(Request request) {
-        return Objects.equals(request.getHeader("Authorization:"), "admin:hunter2");
+        return Objects.equals(request.getHeader("Authorization:"), "Basic");
     }
 
     private Response buildOKLogsResponse() throws IOException {
