@@ -20,7 +20,7 @@ public class HTMLifier {
     public String getHTMLEnd() {
         return "</body>" + "</HTML>";
     }
-    
+
     public String asUnorderedListOfLinks(List<String> listElements) {
         List<String> links = listElements.stream().map(this::formatAsLink).collect(Collectors.toList());
         return asUnorderedList(links);

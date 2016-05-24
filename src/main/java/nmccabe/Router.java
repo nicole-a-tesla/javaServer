@@ -38,6 +38,7 @@ public class Router {
 
     private void loadGETRoutes() {
         getRoutes.put("/", new DirectoryHandler());
+        getRoutes.put("/logs", new LogsHandler());
 
         getRoutes.put("/tea", new TeapotHandler());
         getRoutes.put("/coffee", new TeapotHandler());

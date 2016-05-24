@@ -187,5 +187,13 @@ public class RouterTest {
 
         assertEquals(DirectoryHandler.class, handler.getClass());
     }
+
+    @Test
+    public void routesToLogsHandler() throws Exception {
+        Request request = Helper.buildRequestFromString("GET /logs HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+
+        assertEquals(LogsHandler.class, handler.getClass());
+    }
 }
 

@@ -14,6 +14,7 @@ public class Handler {
     public static final String NOT_ALLOWED_STATUS = "405 Method Not Allowed";
     public static final String PARTIAL_STATUS = "206 Partial";
     public static final String NO_CONTENT_STATUS = "204 No Content";
+    public static final String UNAUTHORIZED_STATUS = "401 Unauthorized";
 
     public Response getResponseFor(Request request) throws IOException {
         return buildResponseForStatus(NOT_ALLOWED_STATUS);
