@@ -37,6 +37,8 @@ public class Router {
     }
 
     private void loadGETRoutes() {
+        getRoutes.put("/", new DirectoryHandler());
+
         getRoutes.put("/tea", new TeapotHandler());
         getRoutes.put("/coffee", new TeapotHandler());
         getRoutes.put("/redirect", new RedirectHandler());

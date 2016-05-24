@@ -15,10 +15,7 @@ public class ResourceHandler extends Handler {
 
     @Override
     public Response getResponseFor(Request request) throws IOException {
-        return handleGET(request);
-    }
 
-    public Response handleGET(Request request) throws IOException {
         if (Objects.equals(request.route, "/")) {
             return bodylessResponse(OK_STATUS);
         }

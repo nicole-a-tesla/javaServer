@@ -179,5 +179,13 @@ public class RouterTest {
 
         assertEquals(AddingStuffHandler.class, handler.getClass());
     }
+
+    @Test
+    public void routesToDirectoryHandler() throws Exception {
+        Request request = Helper.buildRequestFromString("GET / HTTP/1.1\r\n\r\n");
+        Handler handler = router.getHandlerFor(request);
+
+        assertEquals(DirectoryHandler.class, handler.getClass());
+    }
 }
 
