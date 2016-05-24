@@ -9,10 +9,12 @@ import java.util.HashMap;
 
 public class Server {
     ServerSocket serverSocket;
+    Logger logger;
 
     public void setUp(HashMap args) throws IOException {
         String baseDir = (String) args.getOrDefault("-d", "/Users/bears8yourface/IdeaProjects/cob_spec/public");
         System.setProperty("baseDir", baseDir);
+        logger = new Logger((String) args.getOrDefault("--logs", (baseDir + "/logs.txt")));
     }
 
     public void start(HashMap args) throws IOException {
@@ -24,6 +26,7 @@ public class Server {
             InputStream rawInputStream = clientSocket.getInputStream();
 
             Request request = new RequestBuilder().build(rawInputStream);
+            logger.log(request);
             Handler handler = new Router().getHandlerFor(request);
             Response response = handler.getResponseFor(request);
 
