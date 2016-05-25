@@ -25,11 +25,15 @@ public class ServerWorker implements Runnable {
             Handler handler = new Router().getHandlerFor(request);
             Response response = handler.getResponseFor(request);
 
-            OutputStream outStream = clientSocket.getOutputStream();
-            ResponsePrinter printer = new ResponsePrinter(response, outStream);
-            printer.printToOutStream();
-            outStream.flush();
-            outStream.close();
+
+            OutputStream outStream;
+            if (!clientSocket.isClosed()) {
+                outStream = clientSocket.getOutputStream();
+                ResponsePrinter printer = new ResponsePrinter(response, outStream);
+                printer.printToOutStream();
+                outStream.flush();
+                outStream.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

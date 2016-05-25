@@ -19,13 +19,14 @@ public class Server {
 
     public void start(HashMap args) throws IOException {
         setUp(args);
-        ExecutorService executioner = Executors.newFixedThreadPool(10);
+        ExecutorService executioner = Executors.newFixedThreadPool(5);
         serverSocket = new ServerSocket((Integer) args.getOrDefault("-p", 5000));
 
         while (!serverSocket.isClosed()) {
             Socket clientSocket = serverSocket.accept();
             executioner.execute(new ServerWorker(clientSocket, logger));
         }
+        executioner.shutdown();
     }
 
 }
