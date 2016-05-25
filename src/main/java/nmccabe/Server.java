@@ -1,11 +1,11 @@
 package nmccabe;
 
-import nmccabe.Handlers.Handler;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
     ServerSocket serverSocket;
@@ -19,22 +19,14 @@ public class Server {
 
     public void start(HashMap args) throws IOException {
         setUp(args);
+        ExecutorService executioner = Executors.newFixedThreadPool(10);
         serverSocket = new ServerSocket((Integer) args.getOrDefault("-p", 5000));
 
-        while (true) {
+        while (!serverSocket.isClosed()) {
             Socket clientSocket = serverSocket.accept();
-            InputStream rawInputStream = clientSocket.getInputStream();
-
-            Request request = new RequestBuilder().build(rawInputStream);
-            logger.log(request);
-            Handler handler = new Router().getHandlerFor(request);
-            Response response = handler.getResponseFor(request);
-
-            OutputStream outStream = clientSocket.getOutputStream();
-            ResponsePrinter printer = new ResponsePrinter(response, outStream);
-            printer.printToOutStream();
-            outStream.close();
+            executioner.execute(new ServerWorker(clientSocket, logger));
         }
     }
 
 }
+
