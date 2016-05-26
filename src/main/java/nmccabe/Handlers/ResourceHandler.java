@@ -15,10 +15,6 @@ public class ResourceHandler extends Handler {
 
     @Override
     public Response getResponseFor(Request request) throws IOException {
-        if (request.route().contains("/parameters?")) {
-            return handleParamsGET(request);
-        }
-
         File file = new File(System.getProperty("baseDir") + request.route());
         String status;
 
@@ -36,15 +32,6 @@ public class ResourceHandler extends Handler {
         }
     }
 
-    private Response handleParamsGET(Request request) throws UnsupportedEncodingException {
-        Response response = bodylessResponse(OK_STATUS);
-        String params = request.route().split("\\?")[1];
-        String decodedParams = new URLParametersDecoder().decode(params);
-
-        response.addBody(decodedParams.getBytes());
-        return response;
-
-    }
     private Response bodyfulResponse(String status, Resource resource, HashMap requestHeaders) {
         return buildResponseForStatus(status, resource, requestHeaders);
     }
