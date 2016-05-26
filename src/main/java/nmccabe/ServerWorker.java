@@ -8,10 +8,10 @@ import java.io.OutputStream;
 
 public class ServerWorker implements Runnable {
     HttpInStream clientIn;
-    OutputStream clientOut;
+    HttpOutStream clientOut;
     Logger logger;
 
-    public ServerWorker(HttpInStream clientIn, OutputStream clientOut, Logger logger) {
+    public ServerWorker(HttpInStream clientIn, HttpOutStream clientOut, Logger logger) {
         this.clientIn = clientIn;
         this.clientOut = clientOut;
         this.logger = logger;
@@ -26,15 +26,10 @@ public class ServerWorker implements Runnable {
             Response response = handler.getResponseFor(request);
 
             new ResponsePrinter(response, clientOut).printToOutStream();
-            tearDownStream(clientOut);
+            clientOut.tearDownStream();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void tearDownStream(OutputStream out) throws IOException {
-        out.flush();
-        out.close();
     }
 }

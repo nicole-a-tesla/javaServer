@@ -24,7 +24,7 @@ public class Server {
 
         while (!serverSocket.isClosed()) {
             Socket clientSocket = serverSocket.accept();
-            OutputStream clientOut = clientSocket.getOutputStream();
+            HttpOutStream clientOut = new HttpOutStream(clientSocket.getOutputStream());
             HttpInStream clientIn = new HttpInStream(clientSocket.getInputStream());
             executioner.execute(new ServerWorker(clientIn, clientOut, logger));
         }

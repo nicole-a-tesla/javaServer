@@ -18,7 +18,8 @@ public class ResponsePrinterTest {
         ResponseBuilder builder = new ResponseBuilder("200 OK", new Resource(testResourceDir + "/file1"));
         response = builder.build();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ResponsePrinter printer = new ResponsePrinter(response, out);
+        HttpOutStream httpOut = new HttpOutStream(out);
+        ResponsePrinter printer = new ResponsePrinter(response, httpOut);
         printer.printToOutStream();
         outString = out.toString();
     }
@@ -51,11 +52,11 @@ public class ResponsePrinterTest {
         Request request = Helper.buildRequestFromString("GET /coffee HTTP/1.1\r\n\r\n");
         Response coffeeResponse = new TeapotHandler().getResponseFor(request);
 
-        ByteArrayOutputStream coffeeOut = new ByteArrayOutputStream();
+        ByteArrayOutputStream rawCoffeeOut = new ByteArrayOutputStream();
+        HttpOutStream coffeeOut = new HttpOutStream(rawCoffeeOut);
         ResponsePrinter printer = new ResponsePrinter(coffeeResponse, coffeeOut);
         printer.printToOutStream();
         String coffeeOutString = coffeeOut.toString();
-
         assertTrue(coffeeOutString.contains("I'm a teapot"));
     }
 }
