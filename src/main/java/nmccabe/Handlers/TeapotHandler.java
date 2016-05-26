@@ -15,7 +15,7 @@ public class TeapotHandler extends Handler {
             return buildResponseForStatus(OK_STATUS);
         } else if (Objects.equals(request.route(), "/coffee")){
             Response response = buildResponseForStatus(IM_A_TEAPOT);
-            response.addBody("I'm a teapot".getBytes());
+            response.updateBody("I'm a teapot".getBytes());
             return response;
         }
         return buildResponseForStatus(NOT_ALLOWED_STATUS);

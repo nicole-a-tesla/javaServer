@@ -15,7 +15,7 @@ public class ResponsePrinter {
 
     public void printToOutStream() throws IOException {
         out.write(response.formattedHeader());
-        out.write(response.body);
+        out.write(response.body());
         out.write(response.responseEnd());
     }
 

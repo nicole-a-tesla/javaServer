@@ -22,7 +22,7 @@ public class ResponseTest {
 
     @Test
     public void testHasResponseCode() {
-        assertEquals("200 OK", response.statusCode);
+        assertEquals("200 OK", response.statusCode());
     }
 
     @Test
@@ -32,7 +32,7 @@ public class ResponseTest {
 
     @Test
     public void testHasBody() {
-        assertEquals("file1 contents", new String(response.body));
+        assertEquals("file1 contents", new String(response.body()));
     }
 
     @Test
@@ -49,9 +49,9 @@ public class ResponseTest {
     @Test
     public void bodyCanBeAdded() throws Exception {
         Response bodylessResponse = new ResponseBuilder("200 OK", new NullResource()).build();
-        bodylessResponse.addBody("Bod".getBytes());
+        bodylessResponse.updateBody("Bod".getBytes());
 
-        assertEquals("Bod", new String(bodylessResponse.body));
+        assertEquals("Bod", new String(bodylessResponse.body()));
         assertEquals("3", bodylessResponse.getHeader("Content-Length:"));
     }
 

@@ -20,7 +20,7 @@ public class DirectoryHandler extends Handler {
     public Response getResponseFor(Request request) throws IOException {
         Response response = buildResponseForStatus(OK_STATUS);
         byte[] bodyBytes = buildBody();
-        response.addBody(bodyBytes);
+        response.updateBody(bodyBytes);
         return response;
     }
 

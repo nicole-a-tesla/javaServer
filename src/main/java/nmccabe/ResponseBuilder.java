@@ -27,10 +27,10 @@ public class ResponseBuilder {
     }
 
     public Response build() {
-        response.body = getBody();
-        response.mimeType = getMimeType();
-        response.headers = getHeaders();
-        response.statusCode = getStatusCode();
+        response.setBody(getBody());
+        response.setMimeType(getMimeType());
+        response.setHeaders(getHeaders());
+        response.setStatusCode(getStatusCode());
 
         return response;
     }
@@ -60,7 +60,7 @@ public class ResponseBuilder {
     }
 
     private String getContentLength() {
-        return String.valueOf(response.body.length);
+        return String.valueOf(response.body().length);
     }
 
     private String getMimeType() {

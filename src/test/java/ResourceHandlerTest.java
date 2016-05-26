@@ -23,7 +23,7 @@ public class ResourceHandlerTest {
     public void buildsResourceProperly() throws Exception {
         Request request = Helper.buildRequestFromString("GET /text-file.txt HTTP/1.1\r\n\r\n");
         Response response = new ResourceHandler().getResponseFor(request);
-        assertEquals("file1 contents", new String(response.body));
+        assertEquals("file1 contents", new String(response.body()));
     }
 
     @Test
@@ -31,7 +31,7 @@ public class ResourceHandlerTest {
         Request request = Helper.buildRequestFromString("GET /i-dont-exist.txt HTTP/1.1\r\n\r\n");
         Response response = new ResourceHandler().getResponseFor(request);
 
-        assertEquals("404 Not Found", response.statusCode);
+        assertEquals("404 Not Found", response.statusCode());
 
     }
 }

@@ -21,7 +21,7 @@ public class RedirectHandlerTest {
 
     @Test
     public void returns200OKForRequestToRoot() throws Exception {
-        assertEquals("302 Found", response.statusCode);
+        assertEquals("302 Found", response.statusCode());
     }
 
     @Test

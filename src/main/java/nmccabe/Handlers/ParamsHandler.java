@@ -12,7 +12,7 @@ public class ParamsHandler extends Handler {
         Response response = buildResponseForStatus(OK_STATUS);
         String decodedParams = new URLParametersDecoder().decode(request.params());
 
-        response.addBody(decodedParams.getBytes());
+        response.updateBody(decodedParams.getBytes());
         return response;
     }
 }

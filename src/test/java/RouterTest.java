@@ -37,7 +37,7 @@ public class RouterTest {
         Response response = handler.getResponseFor(request);
 
         assertEquals(ResourceHandler.class, handler.getClass());
-        assertEquals("404 Not Found", response.statusCode);
+        assertEquals("404 Not Found", response.statusCode());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class RouterTest {
         Response response = handler.getResponseFor(request);
 
         assertEquals(MethodNotAllowedHandler.class, handler.getClass());
-        assertEquals("405 Method Not Allowed", response.statusCode);
+        assertEquals("405 Method Not Allowed", response.statusCode());
     }
 
     @Test

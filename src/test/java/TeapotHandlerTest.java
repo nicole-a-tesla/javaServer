@@ -16,7 +16,7 @@ public class TeapotHandlerTest {
         Request request = Helper.buildRequestFromString("GET /tea HTTP/1.1\r\n\r\n");
         Response response = handler.getResponseFor(request);
 
-        assertEquals("200 OK", response.statusCode);
+        assertEquals("200 OK", response.statusCode());
     }
 
     @Test
@@ -24,7 +24,7 @@ public class TeapotHandlerTest {
         Request request = Helper.buildRequestFromString("GET /coffee HTTP/1.1\r\n\r\n");
         Response response = handler.getResponseFor(request);
 
-        assertEquals("418 I'm a teapot", response.statusCode);
+        assertEquals("418 I'm a teapot", response.statusCode());
     }
 
     @Test
@@ -32,6 +32,6 @@ public class TeapotHandlerTest {
         Request request = Helper.buildRequestFromString("GET /coffee HTTP/1.1\r\n\r\n");
         Response response = handler.getResponseFor(request);
 
-        assertTrue(new String(response.body).contains("I'm a teapot"));
+        assertTrue(new String(response.body()).contains("I'm a teapot"));
     }
 }

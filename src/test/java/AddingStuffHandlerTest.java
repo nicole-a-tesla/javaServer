@@ -31,7 +31,7 @@ public class AddingStuffHandlerTest {
     @Test
     public void returns200OKForFormPost() throws Exception {
         Response response = new AddingStuffHandler().getResponseFor(postRequest);
-        assertEquals("200 OK", response.statusCode);
+        assertEquals("200 OK", response.statusCode());
     }
 
     @Test
@@ -47,14 +47,14 @@ public class AddingStuffHandlerTest {
         Request getRequest = Helper.buildRequestFromString("GET " + testFileName + " HTTP/1.0\r\n\r\n");
         Response getResponse = new ResourceHandler().getResponseFor(getRequest);
 
-        assertEquals("data=whoa\r\n", new String(getResponse.body));
+        assertEquals("data=whoa\r\n", new String(getResponse.body()));
     }
 
     @Test
     public void respondsToPATCHWith204() throws Exception {
         Request patchRequest = Helper.buildRequestFromString("PATCH " + testFileName + " HTTP/1.0\r\n\r\ndata=whoa\r\n\r\n");
         Response patchResponse = new AddingStuffHandler().getResponseFor(patchRequest);
-        assertEquals("204 No Content", patchResponse.statusCode);
+        assertEquals("204 No Content", patchResponse.statusCode());
     }
 
     @After

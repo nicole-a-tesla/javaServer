@@ -33,7 +33,7 @@ public class LogsHandler extends Handler {
 
     private Response buildOKLogsResponse() throws IOException {
         Response response = buildResponseForStatus(OK_STATUS);
-        response.addBody(getLogs());
+        response.updateBody(getLogs());
         return response;
     }
 

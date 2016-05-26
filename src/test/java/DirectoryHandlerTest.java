@@ -24,14 +24,14 @@ public class DirectoryHandlerTest {
     public void responds200OK() throws Exception {
         Request request = Helper.buildRequestFromString("GET / HTTP/1.0\r\n\r\n");
         Response response = new DirectoryHandler().getResponseFor(request);
-        assertEquals("200 OK", response.statusCode);
+        assertEquals("200 OK", response.statusCode());
     }
 
     @Test
     public void responseBodyHasAllTheRightLinks() throws Exception {
         Request request = Helper.buildRequestFromString("GET / HTTP/1.0\r\n\r\n");
         Response response = new DirectoryHandler().getResponseFor(request);
-        String bodyAsString = new String(response.body);
+        String bodyAsString = new String(response.body());
 
         File baseDir = new File(System.getProperty("baseDir"));
         String[] files = baseDir.list();
