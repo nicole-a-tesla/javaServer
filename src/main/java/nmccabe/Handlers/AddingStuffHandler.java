@@ -1,6 +1,7 @@
 package nmccabe.Handlers;
 
 import nmccabe.FileWriter;
+import nmccabe.HttpCodes;
 import nmccabe.Request;
 import nmccabe.Response;
 
@@ -10,7 +11,7 @@ import java.util.Objects;
 public class AddingStuffHandler extends Handler {
     @Override
     public Response getResponseFor(Request request) throws IOException {
-        String status = (Objects.equals(request.method(), "PATCH")) ? NO_CONTENT_STATUS : OK_STATUS;
+        String status = (Objects.equals(request.method(), "PATCH")) ? HttpCodes.NO_CONTENT : HttpCodes.OK;
         Response response = buildResponseForStatus(status);
         executePost(request.route(), request.body());
 

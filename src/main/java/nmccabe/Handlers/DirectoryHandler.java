@@ -1,6 +1,7 @@
 package nmccabe.Handlers;
 
 import nmccabe.HTMLifier;
+import nmccabe.HttpCodes;
 import nmccabe.Request;
 import nmccabe.Response;
 
@@ -18,7 +19,7 @@ public class DirectoryHandler extends Handler {
 
     @Override
     public Response getResponseFor(Request request) throws IOException {
-        Response response = buildResponseForStatus(OK_STATUS);
+        Response response = buildResponseForStatus(HttpCodes.OK);
         byte[] bodyBytes = buildBody();
         response.updateBody(bodyBytes);
         return response;

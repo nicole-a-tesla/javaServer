@@ -1,9 +1,6 @@
 package nmccabe.Handlers;
 
-import nmccabe.Request;
-import nmccabe.Resource;
-import nmccabe.Response;
-import nmccabe.URLParametersDecoder;
+import nmccabe.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,15 +19,15 @@ public class ResourceHandler extends Handler {
             Resource resource = new Resource(file.getPath());
             return bodyfulResponse(status, resource, request.headers());
         } else {
-            return bodylessResponse(NOT_FOUND_STATUS);
+            return bodylessResponse(HttpCodes.NOT_FOUND);
         }
     }
 
     private String determineOKOrPARTIALStatus(Request request) {
         if (Objects.equals(request.getHeader("Range:"), "Header Not Found")) {
-            return OK_STATUS;
+            return HttpCodes.OK;
         } else {
-            return PARTIAL_STATUS;
+            return HttpCodes.PARTIAL;
         }
     }
 
