@@ -7,11 +7,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class ServerWorker implements Runnable {
-    InputStream clientIn;
+    HttpInStream clientIn;
     OutputStream clientOut;
     Logger logger;
 
-    public ServerWorker(InputStream clientIn, OutputStream clientOut, Logger logger) {
+    public ServerWorker(HttpInStream clientIn, OutputStream clientOut, Logger logger) {
         this.clientIn = clientIn;
         this.clientOut = clientOut;
         this.logger = logger;

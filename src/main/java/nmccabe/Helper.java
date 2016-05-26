@@ -8,7 +8,8 @@ import static java.nio.file.Files.deleteIfExists;
 public class Helper {
     public static Request buildRequestFromString(String string) throws IOException {
         InputStream inputStream = new ByteArrayInputStream(string.getBytes());
-        return new RequestBuilder().build(inputStream);
+        HttpInStream httpInStream = new HttpInStream(inputStream);
+        return new RequestBuilder().build(httpInStream);
     }
 
     public static String readFromBufferToString(BufferedReader buffReader) throws IOException {
