@@ -3,8 +3,6 @@ package nmccabe;
 import nmccabe.Handlers.Handler;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 public class ServerWorker implements Runnable {
     HttpInStream clientIn;
