@@ -10,7 +10,7 @@ public class DeleteHandler extends Handler {
     @Override
     public Response getResponseFor(Request request) throws IOException {
         Response response = buildResponseForStatus(OK_STATUS);
-        executeDelete(request.route);
+        executeDelete(request.route());
 
         return response;
     }

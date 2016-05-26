@@ -39,6 +39,7 @@ public class Router {
     private void loadGETRoutes() {
         getRoutes.put("/", new DirectoryHandler());
         getRoutes.put("/logs", new LogsHandler());
+        getRoutes.put("/parameters", new ParamsHandler());
 
         getRoutes.put("/tea", new TeapotHandler());
         getRoutes.put("/coffee", new TeapotHandler());
@@ -85,8 +86,8 @@ public class Router {
     }
 
     public Handler getHandlerFor(Request request) {
-        if (routes.keySet().contains(request.method)) {
-            return fetchFromRoutes(request.method, request.route);
+        if (routes.keySet().contains(request.method())) {
+            return fetchFromRoutes(request.method(), request.route());
         } else {
             return new MethodNotAllowedHandler();
         }

@@ -18,7 +18,7 @@ public class LogsHandlerTest {
 
         unauthorizedRequest = Helper.buildRequestFromString("GET /logs HTTP/1.0\r\n\r\n");
         authorizedRequest = Helper.buildRequestFromString("GET /logs HTTP/1.0\r\n\r\n");
-        authorizedRequest.headers.put("Authorization:", "Basic");
+        authorizedRequest.setHeader("Authorization:", "Basic");
     }
 
     @Test

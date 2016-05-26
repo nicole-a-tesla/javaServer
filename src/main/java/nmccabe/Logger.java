@@ -15,6 +15,6 @@ public class Logger {
     }
 
     private String firstLineOfRequest(Request request) {
-        return request.method + " " + request.route + " " + request.httpVersion + " ";
+        return request.method() + " " + request.route() + " " + request.httpVersion() + " ";
     }
 }

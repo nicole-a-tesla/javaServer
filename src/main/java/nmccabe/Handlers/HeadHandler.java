@@ -10,7 +10,7 @@ public class HeadHandler extends Handler {
     public Response getResponseFor(Request request) {
         String status = NOT_FOUND_STATUS;
 
-        if (Objects.equals(request.route, "/")) {
+        if (Objects.equals(request.route(), "/")) {
             status = OK_STATUS;
         }
 

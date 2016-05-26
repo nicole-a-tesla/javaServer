@@ -11,9 +11,9 @@ public class TeapotHandler extends Handler {
     @Override
     public Response getResponseFor(Request request) {
 
-        if (Objects.equals(request.route, "/tea")) {
+        if (Objects.equals(request.route(), "/tea")) {
             return buildResponseForStatus(OK_STATUS);
-        } else if (Objects.equals(request.route, "/coffee")){
+        } else if (Objects.equals(request.route(), "/coffee")){
             Response response = buildResponseForStatus(IM_A_TEAPOT);
             response.addBody("I'm a teapot".getBytes());
             return response;
