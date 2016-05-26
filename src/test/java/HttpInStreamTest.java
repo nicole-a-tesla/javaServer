@@ -1,16 +1,17 @@
 import nmccabe.HttpInStream;
 import org.junit.Test;
 
-import java.io.IOException;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import static org.junit.Assert.assertEquals;
 
 public class HttpInStreamTest {
     @Test
-    public void isStuff() throws Exception {
-        InputStream fakeInnerIn = new InputStream() {
-            public int read() throws IOException {return 0;}
-        };
-        HttpInStream in = new HttpInStream(fakeInnerIn);
+    public void returnsStringRepresentationOfByteData() throws Exception {
+        String myString = "lol";
+        InputStream fakeInnerIn = new ByteArrayInputStream(myString.getBytes());
+        HttpInStream httpIn = new HttpInStream(fakeInnerIn);
+        assertEquals(httpIn.readString().substring(0, 3), myString);
 
     }
 }
