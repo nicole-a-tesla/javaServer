@@ -1,3 +1,4 @@
+import nmccabe.HttpInStream;
 import nmccabe.Request;
 import nmccabe.RequestBuilder;
 import org.junit.Test;
@@ -14,9 +15,10 @@ public class RequestTest {
     @Before
     public void setUp() throws IOException {
         String str = "GET /parameters?oh=hi HTTP/1.1\r\nI'm-A-Key: I'm-A-Value\r\nAnother-Key: Another-Value\r\n\r\nbody\r\n\r\n";
-        InputStream stream = new ByteArrayInputStream(str.getBytes());
+        InputStream rawInStream = new ByteArrayInputStream(str.getBytes());
+        HttpInStream httpInStream = new HttpInStream(rawInStream);
         RequestBuilder builder = new RequestBuilder();
-        request = builder.build(stream);
+        request = builder.build(httpInStream);
     }
 
     @Test
@@ -57,10 +59,11 @@ public class RequestTest {
     @Test
     public void getsMultiLineBody() throws IOException {
         String str = "GET / HTTP/1.1\r\nI'm-A-Key: I'm-A-Value\r\nAnother-Key: Another-Value\r\n\r\nbody\r\n\r\nMore body!\r\n\r\nOmg so body\r\n\r\n";
-        InputStream stream = new ByteArrayInputStream(str.getBytes());
+        InputStream rawInStream = new ByteArrayInputStream(str.getBytes());
+        HttpInStream httpInStream = new HttpInStream(rawInStream);
         RequestBuilder builder = new RequestBuilder();
 
-        Request allTheBodyRequest = builder.build(stream);
+        Request allTheBodyRequest = builder.build(httpInStream);
 
         assertEquals("I'm-A-Value", allTheBodyRequest.getHeader("I'm-A-Key:"));
 
@@ -72,7 +75,8 @@ public class RequestTest {
     @Test
     public void getsAllOfTheAboveIfNoBody() throws IOException {
         String strNoBody = "GET / HTTP/1.1\r\nI'm-A-Key: I'm-A-Value\r\nAnother-Key: Another-Value\r\n\r\n";
-        InputStream streamNoBody = new ByteArrayInputStream(strNoBody.getBytes());
+        InputStream rawStreamNoBody = new ByteArrayInputStream(strNoBody.getBytes());
+        HttpInStream streamNoBody = new HttpInStream(rawStreamNoBody);
         RequestBuilder builderNoBody = new RequestBuilder();
 
         Request noBodyRequest = builderNoBody.build(streamNoBody);

@@ -40,10 +40,13 @@ public class ResponseBuilder {
     }
 
     private HashMap<String, String> getHeaders() {
-        HashMap<String, String> headersMap = new HashMap<>();
-
+        HashMap<String, String> headersMap = new HashMap<String, String>();
         headersMap.put("Content-Length:", getContentLength());
-        headersMap.put("Content-Type:", getMimeType());
+
+        String mimeType = resource.mimeType();
+        if (!Objects.equals(mimeType, "")) {
+            headersMap.put("Content-Type:", mimeType);
+        }
 
         return headersMap;
     }
@@ -51,7 +54,7 @@ public class ResponseBuilder {
     private byte[] getBody() {
         byte[] allBytes = resource.byteData();
 
-        if (Objects.equals(status, "206 Partial")) {
+        if (Objects.equals(status, HttpCodes.PARTIAL)) {
             RangeDecoder decoder = new RangeDecoder(allBytes, (String) requestHeaders.get("Range:"));
             return Arrays.copyOfRange(allBytes, decoder.lowerBound(), decoder.upperBound());
         } else {

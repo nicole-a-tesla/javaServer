@@ -1,14 +1,13 @@
 package nmccabe;
 
 import java.io.IOException;
-import java.io.OutputStream;
 
 public class ResponsePrinter {
     private final Response response;
-    private final OutputStream out;
+    private final HttpOutStream out;
 
 
-    public ResponsePrinter(Response response, OutputStream out) {
+    public ResponsePrinter(Response response, HttpOutStream out) {
         this.response = response;
         this.out = out;
     }
@@ -18,9 +17,4 @@ public class ResponsePrinter {
         out.write(response.body());
         out.write(response.responseEnd());
     }
-
-    public void close() throws IOException {
-        out.close();
-    }
-
 }

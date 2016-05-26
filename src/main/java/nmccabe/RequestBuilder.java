@@ -1,7 +1,6 @@
 package nmccabe;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,9 +16,9 @@ public class RequestBuilder {
         this.request = new Request();
     }
 
-    public Request build(InputStream rawInputStream) throws IOException {
+    public Request build(HttpInStream httpInStream) throws IOException {
         try {
-            this.requestLines = getRequestAsArray(rawInputStream);
+            this.requestLines = getRequestAsArray(httpInStream);
             this.headersBodyBreakIndex = getHeaderBodyBreak();
             setFirstLineAttrs();
             setHeaders();
@@ -42,17 +41,15 @@ public class RequestBuilder {
         }
     }
 
-    private ArrayList<String> getRequestAsArray(InputStream rawInputStream) throws IOException {
-        String requestString = getRequestString(rawInputStream);
+    private ArrayList<String> getRequestAsArray(HttpInStream httpInStream) throws IOException {
+        String requestString = getRequestString(httpInStream);
         String realCharsOnly = requestString.split("\u0000")[0];
         String[] requestArray = realCharsOnly.split(carriageReturn);
         return new ArrayList<String>(Arrays.asList(requestArray));
     }
 
-    private String getRequestString(InputStream rawInputStream) throws IOException {
-        byte[] data = new byte[18000];
-        rawInputStream.read(data);
-        return new String(data);
+    private String getRequestString(HttpInStream httpInStream) throws IOException {
+        return httpInStream.readString();
     }
 
     private void setFirstLineAttrs() {

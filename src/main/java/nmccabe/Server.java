@@ -24,9 +24,10 @@ public class Server {
 
         while (!serverSocket.isClosed()) {
             Socket clientSocket = serverSocket.accept();
-            executioner.execute(new ServerWorker(clientSocket, logger));
+            HttpOutStream clientOut = new HttpOutStream(clientSocket.getOutputStream());
+            HttpInStream clientIn = new HttpInStream(clientSocket.getInputStream());
+            executioner.execute(new ServerWorker(clientIn, clientOut, logger));
         }
-        executioner.shutdown();
     }
 
 }
