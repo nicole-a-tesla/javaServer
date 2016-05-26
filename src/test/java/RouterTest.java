@@ -37,7 +37,7 @@ public class RouterTest {
         Response response = handler.getResponseFor(request);
 
         assertEquals(ResourceHandler.class, handler.getClass());
-        assertEquals("404 Not Found", response.statusCode);
+        assertEquals("404 Not Found", response.statusCode());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class RouterTest {
         Response response = handler.getResponseFor(request);
 
         assertEquals(MethodNotAllowedHandler.class, handler.getClass());
-        assertEquals("405 Method Not Allowed", response.statusCode);
+        assertEquals("405 Method Not Allowed", response.statusCode());
     }
 
     @Test
@@ -164,12 +164,12 @@ public class RouterTest {
     }
 
     @Test
-    public void routesToResourceHandlerOnGETWithParams() throws Exception {
+    public void routesToParamsHandlerOnGETWithParams() throws Exception {
         String paramsRoute = "/parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff";
         Request request = Helper.buildRequestFromString("GET " + paramsRoute +  " HTTP/1.1\r\n\r\n");
         Handler handler = router.getHandlerFor(request);
 
-        assertEquals(ResourceHandler.class, handler.getClass());
+        assertEquals(ParamsHandler.class, handler.getClass());
     }
 
     @Test

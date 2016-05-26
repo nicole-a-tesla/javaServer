@@ -18,13 +18,13 @@ public class LogsHandlerTest {
 
         unauthorizedRequest = Helper.buildRequestFromString("GET /logs HTTP/1.0\r\n\r\n");
         authorizedRequest = Helper.buildRequestFromString("GET /logs HTTP/1.0\r\n\r\n");
-        authorizedRequest.headers.put("Authorization:", "Basic");
+        authorizedRequest.setHeader("Authorization:", "Basic");
     }
 
     @Test
     public void returns401ForPlainGet() throws Exception {
         Response response = new LogsHandler().getResponseFor(unauthorizedRequest);
-        assertEquals("401 Unauthorized", response.statusCode);
+        assertEquals("401 Unauthorized", response.statusCode());
     }
 
     @Test
@@ -36,14 +36,14 @@ public class LogsHandlerTest {
     @Test
     public void returns200ForLoggedInGet() throws Exception {
         Response response = new LogsHandler().getResponseFor(authorizedRequest);
-        assertEquals("200 OK", response.statusCode);
+        assertEquals("200 OK", response.statusCode());
     }
 
     @Test
     public void returnsLogsFileContentsForAuthorizedGET() throws Exception {
         String fakeLogFile = System.getProperty("baseDir") + "/file1";
         Response response = new LogsHandler(fakeLogFile).getResponseFor(authorizedRequest);
-        assertEquals("file1 contents", new String(response.body));
+        assertEquals("file1 contents", new String(response.body()));
     }
 
     @After

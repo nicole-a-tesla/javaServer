@@ -13,7 +13,7 @@ public class RequestTest {
 
     @Before
     public void setUp() throws IOException {
-        String str = "GET / HTTP/1.1\r\nI'm-A-Key: I'm-A-Value\r\nAnother-Key: Another-Value\r\n\r\nbody\r\n\r\n";
+        String str = "GET /parameters?oh=hi HTTP/1.1\r\nI'm-A-Key: I'm-A-Value\r\nAnother-Key: Another-Value\r\n\r\nbody\r\n\r\n";
         InputStream stream = new ByteArrayInputStream(str.getBytes());
         RequestBuilder builder = new RequestBuilder();
         request = builder.build(stream);
@@ -21,17 +21,22 @@ public class RequestTest {
 
     @Test
     public void testGetRequestMethod() {
-        assertEquals("GET", request.method);
+        assertEquals("GET", request.method());
     }
 
     @Test
-    public void testGetRequestResource() {
-        assertEquals("/", request.route);
+    public void testGetRequestRoute() {
+        assertEquals("/parameters", request.route());
+    }
+
+    @Test
+    public void testGetParameters() {
+        assertEquals("oh=hi", request.params());
     }
 
     @Test
     public void testGetRequestHttpVersion() {
-        assertEquals("HTTP/1.1", request.httpVersion);
+        assertEquals("HTTP/1.1", request.httpVersion());
     }
 
     @Test
@@ -46,7 +51,7 @@ public class RequestTest {
 
     @Test
     public void getBody() {
-        assertEquals("body\r\n", request.body);
+        assertEquals("body\r\n", request.body());
     }
 
     @Test
@@ -59,9 +64,9 @@ public class RequestTest {
 
         assertEquals("I'm-A-Value", allTheBodyRequest.getHeader("I'm-A-Key:"));
 
-        assertTrue(allTheBodyRequest.body.contains("body"));
-        assertTrue(allTheBodyRequest.body.contains("More body!"));
-        assertTrue(allTheBodyRequest.body.contains("Omg so body"));
+        assertTrue(allTheBodyRequest.body().contains("body"));
+        assertTrue(allTheBodyRequest.body().contains("More body!"));
+        assertTrue(allTheBodyRequest.body().contains("Omg so body"));
     }
 
     @Test
@@ -72,11 +77,11 @@ public class RequestTest {
 
         Request noBodyRequest = builderNoBody.build(streamNoBody);
 
-        assertEquals("GET", noBodyRequest.method);
-        assertEquals("/", noBodyRequest.route);
-        assertEquals("HTTP/1.1", noBodyRequest.httpVersion);
+        assertEquals("GET", noBodyRequest.method());
+        assertEquals("/", noBodyRequest.route());
+        assertEquals("HTTP/1.1", noBodyRequest.httpVersion());
         assertEquals("I'm-A-Value", noBodyRequest.getHeader("I'm-A-Key:"));
         assertEquals("Another-Value", noBodyRequest.getHeader("Another-Key:"));
-        assertEquals("", noBodyRequest.body);
+        assertEquals("", noBodyRequest.body());
     }
 }

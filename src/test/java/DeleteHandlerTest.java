@@ -28,7 +28,7 @@ public class DeleteHandlerTest {
         Request request = Helper.buildRequestFromString("DELETE " + testFileName + " HTTP/1.0\r\n\r\n");
         Response response = new DeleteHandler().getResponseFor(request);
 
-        assertEquals("200 OK", response.statusCode);
+        assertEquals("200 OK", response.statusCode());
     }
 
     @Test

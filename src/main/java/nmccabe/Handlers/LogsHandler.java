@@ -1,6 +1,7 @@
 package nmccabe.Handlers;
 
 import nmccabe.FileReader;
+import nmccabe.HttpCodes;
 import nmccabe.Request;
 import nmccabe.Response;
 
@@ -32,8 +33,8 @@ public class LogsHandler extends Handler {
     }
 
     private Response buildOKLogsResponse() throws IOException {
-        Response response = buildResponseForStatus(OK_STATUS);
-        response.addBody(getLogs());
+        Response response = buildResponseForStatus(HttpCodes.OK);
+        response.updateBody(getLogs());
         return response;
     }
 
@@ -44,7 +45,7 @@ public class LogsHandler extends Handler {
     }
 
     private Response buildUnauthorizedResponse() {
-        Response response = buildResponseForStatus(UNAUTHORIZED_STATUS);
+        Response response = buildResponseForStatus(HttpCodes.UNAUTHORIZED);
         response.addHeader("WWW-Authenticate:", "Basic realm=ohHai");
         return response;
     }

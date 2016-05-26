@@ -58,13 +58,28 @@ public class RequestBuilder {
     private void setFirstLineAttrs() {
         String[] firstLineParts = requestLines.get(0).split(" ");
 
-        request.method = firstLineParts[0];
-        request.route = firstLineParts[1];
-        request.httpVersion = firstLineParts[2];
+        request.setMethod(firstLineParts[0]);
+        setRouteAndParams(firstLineParts[1]);
+        request.setHttpVersion(firstLineParts[2]);
+    }
+
+    private void setRouteAndParams(String routeAndPossiblyParams) {
+        String[] separateRouteAndParams = routeAndPossiblyParams.split("\\?");
+        request.setRoute(separateRouteAndParams[0]);
+
+        if (requestHasParams(separateRouteAndParams)) {
+            request.setParams(separateRouteAndParams[1]);
+        } else {
+            request.setParams("");
+        }
+    }
+
+    private boolean requestHasParams(String[] routeAndParams) {
+        return routeAndParams.length == 2;
     }
 
     private void setHeaders() {
-        request.headers =  buildHeaderHash();
+        request.setHeaders(buildHeaderHash());
     }
 
     private HashMap<String, String> buildHeaderHash() {
@@ -89,7 +104,7 @@ public class RequestBuilder {
 
     private void setBodyIfPresent() {
         List<String> bodyParts = requestLines.subList(headersBodyBreakIndex + 1, requestLines.size());
-        request.body = buildBodyString(bodyParts);
+        request.setBody(buildBodyString(bodyParts));
     }
 
     private String buildBodyString(List<String> bodyParts) {
