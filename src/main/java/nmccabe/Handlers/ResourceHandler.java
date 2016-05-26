@@ -16,19 +16,21 @@ public class ResourceHandler extends Handler {
     @Override
     public Response getResponseFor(Request request) throws IOException {
         File file = new File(System.getProperty("baseDir") + request.route());
-        String status;
-
-        if (Objects.equals(request.getHeader("Range:"), "Header Not Found")) {
-            status = OK_STATUS;
-        } else {
-            status = PARTIAL_STATUS;
-        }
+        String status = determineOKOrPARTIALStatus(request);
 
         if (file.exists()) {
             Resource resource = new Resource(file.getPath());
             return bodyfulResponse(status, resource, request.headers());
         } else {
             return bodylessResponse(NOT_FOUND_STATUS);
+        }
+    }
+
+    private String determineOKOrPARTIALStatus(Request request) {
+        if (Objects.equals(request.getHeader("Range:"), "Header Not Found")) {
+            return OK_STATUS;
+        } else {
+            return PARTIAL_STATUS;
         }
     }
 
